@@ -6,9 +6,10 @@
 }
 
 window#waybar {
-    background-color: #282a36;
+    /* background-color: #282a36; */
+    background-color: rgba(32, 32, 32, 0.72);
     color: #f8f8f2;
-    background: transparent;
+    /* backgoround: transparent */
     transition-property: background-color;
     transition-duration: .5s;
 }
