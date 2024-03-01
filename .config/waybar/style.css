@@ -1,0 +1,158 @@
+@import 'colors-waybar.css';
+
+* {
+    font-family: Fira Sans Semibold, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+window#waybar {
+    background-color: #282a36;
+    color: #f8f8f2;
+    background: transparent;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#mode {
+    background-color: #64727D;
+    border-bottom: 3px solid #ffffff;
+}
+
+#workspaces button {
+    padding: 0px 10px;
+    border-radius: 10px;
+    color: #FFFFFF;
+    /* font-weight:bold; */
+    border:0;
+    margin:0;
+}
+
+#workspaces button.active {
+    color: #FFFFFF;
+    border-radius: 15px;
+    font-weight:bold;
+    border:0;
+}
+
+#workspaces button:hover {
+	color: #FFFFFF;
+	border-radius: 15px;
+    border:0;
+}
+#workspaces button.focused {
+	color: #FFFFFF;
+	border-radius: 15px;
+    font-weight:bold;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+#custom-outlook{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16;
+}
+#custom-uniMail{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16;
+}
+#custom-teams{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16;
+}
+#custom-bitwarden{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16;
+}
+#custom-screenshot{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16;
+}
+#custom-exit{
+    margin-left: 5px;
+    margin-right: 20px;
+    font-size: 16;
+}
+
+
+
+
+#clock {
+    background-color: transparent;
+    margin-right:5;
+    font-size:16;
+}
+
+#battery {
+    color: #ffffff;
+    margin-right: 10;
+}
+
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+    margin-left:10;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    margin-left:10;
+}
+
+
+#cpu {
+   background-color: transparent;
+    margin-right: 10;
+}
+
+#memory {
+    background-color: transparent;
+    margin-right: 10;
+}
+
+
+#backlight {
+    background-color: transparent;
+    margin-right: 10;
+}
+
+#pulseaudio {
+    background-color: transparent;
+    margin-right: 10;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color: #2a5c45;
+    margin-right: 10;
+}
+
+#wireplumber {
+    background-color: #fff0f5;
+    color: #000000;
+    margin-right: 10;
+}
+
+#wireplumber.muted {
+    background-color: #f53c3c;
+    margin-right: 10;
+}
+

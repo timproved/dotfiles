@@ -1,0 +1,166 @@
+--------------------------------------------
+   Hyprland Crash Report
+--------------------------------------------
+I hope you didn't have any unsaved progress.
+
+Hyprland received signal 6 (Aborted)
+
+Version: 84ab8d11e8951a6551d1e1bf87796a8589da6d47
+Tag: v0.35.0
+
+System info:
+	System name: Linux
+	Node name: archlinux
+	Release: 6.7.6-arch1-2
+	Version: #1 SMP PREEMPT_DYNAMIC Thu, 29 Feb 2024 19:08:51 +0000
+
+GPU:
+	03:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 32 [Radeon RX 7700 XT / 7800 XT] [1002:747e] (rev c8) (prog-if 00 [VGA controller])
+
+
+os-release:
+	NAME="Arch Linux"
+	PRETTY_NAME="Arch Linux"
+	ID=arch
+	BUILD_ID=rolling
+	ANSI_COLOR="38;2;23;147;209"
+	HOME_URL="https://archlinux.org/"
+	DOCUMENTATION_URL="https://wiki.archlinux.org/"
+	SUPPORT_URL="https://bbs.archlinux.org/"
+	BUG_REPORT_URL="https://gitlab.archlinux.org/groups/archlinux/-/issues"
+	PRIVACY_POLICY_URL="https://terms.archlinux.org/docs/privacy-policy/"
+	LOGO=archlinux-logo
+	
+
+
+Backtrace:
+	#0 | Hyprland(_Z12getBacktracev+0x62) [0x64297d4e4612]
+		??
+		??:0
+	#1 | Hyprland(_ZN13CrashReporter18createAndSaveCrashEi+0x5c5) [0x64297d4ae4a5]
+		??
+		??:0
+	#2 | Hyprland(_Z25handleUnrecoverableSignali+0x4c) [0x64297d42783c]
+		??
+		??:0
+	#3 | /usr/lib/libc.so.6(+0x3c770) [0x7b79cf85a770]
+		??
+		??:0
+	#4 | /usr/lib/libc.so.6(+0x8d32c) [0x7b79cf8ab32c]
+		??
+		??:0
+	#5 | /usr/lib/libc.so.6(gsignal+0x18) [0x7b79cf85a6c8]
+		??
+		??:0
+	#6 | Hyprland(_ZN15CHyprOpenGLImpl5beginEP8CMonitorP7CRegionP12CFramebuffer+0x131) [0x64297d5593a1]
+		??
+		??:0
+	#7 | Hyprland(_ZN13CHyprRenderer11beginRenderEP8CMonitorR7CRegion11eRenderModeP10wlr_bufferP12CFramebuffer+0xc4) [0x64297d571c04]
+		??
+		??:0
+	#8 | Hyprland(_ZN13CHyprRenderer13renderMonitorEP8CMonitor+0x5a6) [0x64297d569256]
+		??
+		??:0
+	#9 | Hyprland(_Z13handleWrappedP11wl_listenerPv+0x62) [0x64297d4ea952]
+		??
+		??:0
+	#10 | /usr/lib/libwayland-server.so.0(wl_signal_emit_mutable+0x7e) [0x7b79d020201e]
+		??
+		??:0
+	#11 | /usr/lib/libwlroots.so.13032(+0x450e9) [0x7b79d02900e9]
+		??
+		??:0
+	#12 | /usr/lib/libdrm.so.2(drmHandleEvent+0x127) [0x7b79d01ef907]
+		??
+		??:0
+	#13 | /usr/lib/libwlroots.so.13032(+0x3e98e) [0x7b79d028998e]
+		??
+		??:0
+	#14 | /usr/lib/libwayland-server.so.0(wl_event_loop_dispatch+0xa2) [0x7b79d0203ae2]
+		??
+		??:0
+	#15 | /usr/lib/libwayland-server.so.0(wl_display_run+0x27) [0x7b79d02042d7]
+		??
+		??:0
+	#16 | Hyprland(_ZN11CCompositor15startCompositorEv+0x658) [0x64297d428d38]
+		??
+		??:0
+	#17 | Hyprland(main+0x727) [0x64297d410437]
+		??
+		??:0
+	#18 | /usr/lib/libc.so.6(+0x25cd0) [0x7b79cf843cd0]
+		??
+		??:0
+	#19 | /usr/lib/libc.so.6(__libc_start_main+0x8a) [0x7b79cf843d8a]
+		??
+		??:0
+	#20 | Hyprland(_start+0x25) [0x64297d425145]
+		??
+		??:0
+
+
+Log tail:
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] Callback 64297fd6dac8 -> 64297fd6dac0, CWLSurface removed.
+[LOG] CWLSurface 64297fd6da78 called destroy()
+[LOG] Registered signal for owner 64297fd6da78: 6429804888d0 -> 64297fd6daa0 (owner: CWLSurface)
+[LOG] CWLSurface 64297fd6da78 called init()
+[LOG] FractionalScaleManager bound successfully!
+[LOG] ScreencopyProtocolManager bound successfully!
+[LOG] New session lock!
+[LOG] Session got locked by 64297ffbac80
+[LOG] Registered signal for owner 64297ffbac80: 64297ffbac98 -> 64297fcdeb28 (owner: wlr_session_lock_v1)
+[LOG] Registered signal for owner 64297ffbac80: 64297ffbaca8 -> 64297fcdeb90 (owner: wlr_session_lock_v1)
+[LOG] Registered signal for owner 64297ffbac80: 64297ffbacb8 -> 64297fcdebf8 (owner: wlr_session_lock_v1)
+[LOG] Registered signal for owner 64297fabc880: 6429802f4f20 -> 64297fabc890 (owner: SSessionLockSurface)
+[LOG] Registered signal for owner 64297fabc880: 642980456c18 -> 64297fabc8f8 (owner: SSessionLockSurface)
+[LOG] Registered signal for owner 64297fabc880: 6429802f4f10 -> 64297fabc960 (owner: SSessionLockSurface)
+[LOG] SessionLockSurface 64297fabc880 mapped
+[LOG] Set keyboard focus to surface 6429802f4c20
+[CRITICAL] 
+==========================================================================================
+ASSERTION FAILED! 
+
+Aborting, glGetGraphicsResetStatus returned GL_INNOCENT_CONTEXT_RESET. Cannot continue until proper GPU reset handling is implemented.
+
+at: line 203 in OpenGL.cpp

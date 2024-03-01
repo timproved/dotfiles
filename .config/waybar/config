@@ -1,0 +1,103 @@
+{
+    "layer": "top", // Waybar at top layer
+    "height": 35, // Waybar height (to be removed for auto height)
+    "spacing": 4, // Gaps between modules (4px)
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "modules-left": [
+    "hyprland/workspaces",
+        "custom/outlook",
+        "custom/uniMail",
+        "custom/teams",
+        "custom/bitwarden",
+    ],
+   "modules-center": ["hyprland/window"],
+    "modules-right": [
+        "pulseaudio",
+        "backlight",
+        "cpu",
+        "memory",
+        "battery",
+        "clock",
+        "custom/exit"
+    ],
+    "hyprland/window": {
+		"max-length": 60,
+		"separate-outputs": false
+	},
+    "custom/outlook": {
+        "format": "",
+        "on-click": "brave --app=https://outlook.office.com/mail/"
+    },
+    "custom/teams": {
+        "format": "",
+        "on-click": "brave --app=https://teams.microsoft.com/go"
+    },
+    "custom/uniMail": {
+        "format": " ",
+        "on-click": "brave --app=https://outlook.hnu.de/owa/#path=/mail"
+    },
+    "custom/bitwarden":{
+        "format": "",
+        "on-click": "brave --app=https://vault.bitwarden.com/"
+    },
+    "custom/screenshot":{
+        "format": " ",
+        "on-click": "exec grim -g $(slurp)"
+    },
+    "custom/exit": {
+        "format": "",
+        "on-click": "~/dotfiles/scripts/powermenu-hypr.sh"
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": " {}%"
+    },
+    "backlight": {
+      "tooltip": false,
+      "device": "intel_backlight",
+      "format": " {percent}%",
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}   {capacity}%",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+  "pulseaudio": {
+        "format": "{icon} {volume}%", // Display icon and volume percentage
+        "format-bluetooth": "{volume}% {icon}  {format_source}", // Format when using Bluetooth
+        "format-bluetooth-muted": "  {icon}  {format_source}", // Bluetooth muted format
+        "format-muted": "  {format_source}", // Muted format
+        "format-source": "{volume}%  ", // Source format
+        "format-source-muted": " ", // Source muted format
+        "format-icons": {
+            "headphone": " ", // Icon for headphones
+            "hands-free": " ", // Icon for hands-free devices
+            "headset": " ", // Icon for headsets
+            "phone": " ", // Icon for phones
+            "portable": " ", // Icon for portable devices
+            "car": " ", // Icon for car devices
+            "default": [" ", " ", " "] // Default icons for volume levels (low, medium, high)
+        },
+        "on-click": "pavucontrol" // Action on click, opens pavucontrol
+    }
+}
+
+
