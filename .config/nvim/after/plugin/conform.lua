@@ -4,7 +4,8 @@ require("conform").setup({
 		-- Conform will run multiple formatters sequentially
 		--python = { "isort", "black" },
 		-- Use a sub-list to run only the first available formatter
-		-- javascript = { { "prettierd", "prettier" } },
+		javascript = { { "prettierd", "prettier" } },
+		typescript = { { "prettierd", "prettier" } },
 		c = { "clang_format" },
 		java = { "google-java-format" },
 		python = { "isort", "black" },
@@ -25,7 +26,7 @@ require("conform").setup({
 	-- If this is set, Conform will run the formatter asynchronously after save.
 	-- It will pass the table to conform.format().
 	-- This can also be a function that returns the table.
-	format_after_saveet = {
+	format_after_save = {
 		lsp_fallback = true,
 	},
 	-- Set the log level. Use `:ConformInfo` to see the location of the log file.
