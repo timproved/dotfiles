@@ -131,4 +131,8 @@ local plugins = {
 	--BQF
 	"kevinhwang91/nvim-bqf",
 }
-require("lazy").setup(plugins, opts)
+--require("lazy").setup(plugins, opts)
+require("lazy").setup({
+	spec = "nvimtim.plugins",
+	change_detection = { notify = true },
+})
