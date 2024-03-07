@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+JAVA_HOME="/usr/lib/jvm/java-21-openjdk/"
+export JAVA_HOME
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -101,3 +104,4 @@ source $ZSH/oh-my-zsh.sh
  alias ohmyzsh="mate ~/.oh-my-zsh"
  alias vi="nvim"
  alias la="ls -a"
+ alias shutdown="shutdown now"
