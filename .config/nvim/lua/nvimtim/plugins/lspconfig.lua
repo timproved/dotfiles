@@ -176,7 +176,7 @@ return {
 				"typescript-language-server",
 				"html-lsp",
 				"htmx-lsp",
-				--"gopls", --Go LSP
+				"gopls", --Go LSP
 				--"rust-analyzer", --Rust LSP
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
