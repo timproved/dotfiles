@@ -106,4 +106,3 @@ source $ZSH/oh-my-zsh.sh
  alias la="ls -a"
  alias shutdown="shutdown now"
 # Alias for RDP connection to Windows VM
-alias winvm="xfreerdp /grab-keyboard /v:192.168.122.235 /u:TimVM /size:100% /dynamic-resolution /gfx-h264:avc444 +gfx-progressive"

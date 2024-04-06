@@ -48,7 +48,7 @@
     },
     "custom/exit": {
         "format": "",
-        "on-click": "~/dotfiles/scripts/powermenu-hypr.sh"
+        "on-click": "~/.config/hypr/scripts/powermenu.sh"
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",

@@ -126,7 +126,7 @@ local plugins = {
 	--TMUX
 	"christoomey/vim-tmux-navigator",
 	--Copilot
-	"github/copilot.vim",
+	-- "github/copilot.vim",
 	--Markdown && Jupyter NoteBook
 	--BQF
 	"kevinhwang91/nvim-bqf",
