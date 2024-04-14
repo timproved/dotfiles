@@ -7,10 +7,6 @@
     "margin-right": 0,
     "modules-left": [
     "hyprland/workspaces",
-        "custom/outlook",
-        "custom/uniMail",
-        "custom/teams",
-        "custom/bitwarden",
     ],
    "modules-center": ["hyprland/window"],
     "modules-right": [

@@ -1,30 +1,30 @@
-[colors.bright]
-black = "0x9ea7b3"
-blue = "0x91cbff"
-cyan = "0x39c5cf"
-green = "0x4ae168"
-magenta = "0xcb9eff"
-red = "0xffb1af"
-white = "0xd9dee3"
-yellow = "0xf7c843"
+[colors.primary]
+background = "0x000000"
+foreground = "0xffffff"
 
 [colors.cursor]
-cursor = "0xf0f3f6"
-text = "0x0a0c10"
+text = "0xF81CE5"
+cursor = "0xffffff"
 
 [colors.normal]
-black = "0x7a828e"
-blue = "0x71b7ff"
-cyan = "0x39c5cf"
-green = "0x26cd4d"
-magenta = "0xcb9eff"
-red = "0xff9492"
-white = "0xd9dee3"
-yellow = "0xf0b72f"
+black = "0x000000"
+red = "0xfe0100"
+green = "0x33ff00"
+yellow = "0xfeff00"
+blue = "0x0066ff"
+magenta = "0xcc00ff"
+cyan = "0x00ffff"
+white = "0xd0d0d0"
 
-[colors.primary]
-background = "0x0a0c10"
-foreground = "0xf0f3f6"
+[colors.bright]
+black = "0x808080"
+red = "0xfe0100"
+green = "0x33ff00"
+yellow = "0xfeff00"
+blue = "0x0066ff"
+magenta = "0xcc00ff"
+cyan = "0x00ffff"
+white = "0xFFFFFF"
 
 [font.normal]
 family = "JetBrainsMonoNerdFont Mono"
