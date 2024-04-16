@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-JAVA_HOME="/usr/lib/jvm/java-21-openjdk/"
+JAVA_HOME="/usr/lib/jvm/java-22-openjdk/"
 export JAVA_HOME
 
 # Set name of the theme to load --- if set to "random", it will
