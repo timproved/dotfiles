@@ -16,6 +16,7 @@ return {
 					"java",
 					"html",
 					"markdown",
+					"markdown_inline",
 					"css",
 					"javascript",
 					"typescript",

@@ -113,9 +113,6 @@ return {
 				pyright = {
 					capabilities = capabilities,
 				},
-				jdtls = {
-					capabilities = capabilities,
-				}, -- Disabled, since we are already using jdtls as per ftplugin
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				-- https://github.com/pmizio/typescript-tools.nvim
@@ -123,8 +120,6 @@ return {
 				tsserver = {
 					capabilities = capabilities,
 				},
-				htmx = {},
-				html = {},
 				--
 
 				lua_ls = {
@@ -165,8 +160,6 @@ return {
 				"stylua", --Lua Formatter
 				--C/CPP:
 				"clangd", --C/CPP LSP
-				"clang-format", --C/CPP Formatter
-				"codelldb", --C/CPP Debugger
 				"cpplint", --C/CPP Linter
 				--PYTHON:
 				"pyright", --Python LSP
@@ -174,13 +167,12 @@ return {
 				"ruff", --Python Diagnostics
 				"black", --Python Formatter
 				"isort", --Python Formatter
-				"debugpy", --Python Debugger
 				--JAVA:
 				"jdtls", --Java Language Server
 				--JAVASCRIPT/TS:
 				"typescript-language-server",
 				"html-lsp",
-				"htmx-lsp",
+				"vale", --Markdown Linter
 				-- "gopls", --Go LSP
 				--"rust-analyzer", --Rust LSP
 			})
