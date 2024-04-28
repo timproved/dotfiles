@@ -4,8 +4,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-JAVA_HOME="/usr/lib/jvm/java-22-openjdk/"
+JAVA_HOME="/usr/lib/jvm/java-21-openjdk/"
 export JAVA_HOME
+export PATH="/usr/lib/jvm/java-21-openjdk/bin":$PATH
+export PATH="/home/tim/.local/share/nvim/mason/packages/jdtls/jdtls":$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

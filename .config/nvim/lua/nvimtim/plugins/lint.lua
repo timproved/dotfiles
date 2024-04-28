@@ -11,7 +11,7 @@ return {
 				markdown = nil,
 				c = { "cpplint" },
 				python = { "mypy", "ruff" },
-				java = { "checkstyle" },
+				-- java = { "checkstyle" },
 				text = nil,
 			}
 			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

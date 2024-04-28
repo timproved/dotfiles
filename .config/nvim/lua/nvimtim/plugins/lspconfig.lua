@@ -120,8 +120,6 @@ return {
 				tsserver = {
 					capabilities = capabilities,
 				},
-				--
-
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes { ...},

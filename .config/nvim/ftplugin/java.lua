@@ -1,17 +1,18 @@
-local home = os.getenv("HOME")
-local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
+local workspace_path = "/home/tim/.local/share/nvim/jdtls-workspace/"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = workspace_path .. project_name
 
 local status, jdtls = pcall(require, "jdtls")
 if not status then
+	vim.notify("jdtls not found", vim.log.levels.ERROR)
 	return
 end
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 
 local config = {
 	cmd = {
-		"java",
+		"/home/tim/.local/share/nvim/mason/bin/jdtls",
+		"java" .. "/usr/lib/jvm/java-21-openjdk/bin/java",
 		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 		"-Dosgi.bundles.defaultStartLevel=4",
 		"-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -23,13 +24,12 @@ local config = {
 		"java.base/java.util=ALL-UNNAMED",
 		"--add-opens",
 		"java.base/java.lang=ALL-UNNAMED",
-		"-javaagent:" .. home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
-		"-jar",
-		vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
-		"-configuration",
-		home .. "/.local/share/nvim/mason/packages/jdtls/config_mac",
-		"-data",
-		workspace_dir,
+
+		"-javaagent:" .. "/home/tim/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+		"-jar"
+			.. "/home/tim/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.800.v20240304-1850.jar",
+		"-configuration" .. "/home/tim/.local/share/nvim/mason/packages/jdtls/config_linux/",
+		"-data" .. workspace_dir,
 	},
 	root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
 
