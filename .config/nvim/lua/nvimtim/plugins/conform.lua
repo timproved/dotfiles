@@ -10,6 +10,7 @@ return {
 				lua = { "stylua" },
 				c = { "clang_format" },
 				python = { "isort", "black" },
+				java = { "google-java-format" },
 				-- Use the "*" filetype to run formatters on all filetypes.
 				["*"] = { "codespell" },
 				-- Use the "_" filetype to run formatters on filetypes that don't

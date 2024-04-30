@@ -167,6 +167,7 @@ return {
 				"isort", --Python Formatter
 				--JAVA:
 				"jdtls", --Java Language Server
+				"google-java-format", --Java Formatter
 				--JAVASCRIPT/TS:
 				"typescript-language-server",
 				"html-lsp",
