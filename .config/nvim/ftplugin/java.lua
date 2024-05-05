@@ -6,9 +6,16 @@ end
 
 local home = os.getenv("HOME")
 local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = workspace_path .. project_name
 local os_config = "linux"
+local debug_path = vim.fn.glob(
+	home
+		.. "/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
+)
+local test_path = vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-test/extension/server/*.jar")
+
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local workspace_dir = vim.fn.stdpath("data") .. "/site/java/workspace-root/" .. project_name
+os.execute("mkdir " .. workspace_dir)
 
 local capabilities = require("cmp_nvim_lsp").capabilities
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
@@ -72,16 +79,45 @@ local config = {
 				},
 			},
 			format = {
-				enabled = false,
+				enabled = true,
+				settings = {
+					url = vim.fn.stdpath("config") .. "/lang-servers/intellij-java-google-java-format.xml",
+					profile = "GoogleStyle",
+				},
 			},
 		},
 		signatureHelp = { enabled = true },
+		completion = {
+			favoriteStaticMembers = {
+				"org.hamcrest.MatcherAssert.assertThat",
+				"org.hamcrest.Matchers.*",
+				"org.hamcrest.CoreMatchers.*",
+				"org.junit.jupiter.api.Assertions.*",
+				"java.util.Objects.requireNonNull",
+				"java.util.Objects.requireNonNullElse",
+				"org.mockito.Mockito.*",
+			},
+			importOrder = {
+				"java",
+				"javax",
+				"com",
+				"org",
+			},
+		},
 		extendedClientCapabilities = extendedClientCapabilities,
 	},
 	init_options = {
-		bundles = {},
+		bundles = {
+			debug_path,
+			test_path,
+		},
 	},
 }
+
+config["on_attach"] = function(client, bufnr)
+	local _, _ = pcall(vim.lsp.codelens.refresh)
+	require("jdtls").setup_dap({ hotcodereplace = "auto" })
+end
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	pattern = { "*.java" },

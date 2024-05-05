@@ -6,7 +6,6 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "NetRW me daddy" })
 -- Jump up and down stay centered
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Jump down" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Jump up, Jump up, " })
-
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 --yank that shit

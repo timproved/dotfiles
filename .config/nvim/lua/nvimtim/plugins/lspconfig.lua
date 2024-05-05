@@ -113,6 +113,7 @@ return {
 				pyright = {
 					capabilities = capabilities,
 				},
+				jdtls = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				-- https://github.com/pmizio/typescript-tools.nvim
@@ -147,9 +148,7 @@ return {
 					},
 				},
 			}
-
 			require("mason").setup()
-
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -168,6 +167,8 @@ return {
 				--JAVA:
 				"jdtls", --Java Language Server
 				"google-java-format", --Java Formatter
+				"java-test",
+				"java-debug-adapter",
 				--JAVASCRIPT/TS:
 				"typescript-language-server",
 				"html-lsp",
@@ -186,6 +187,13 @@ return {
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
+					end,
+					-- Avoid duplicate servers for ftplugin custom lsp servers:
+					["jdtls"] = function()
+						local lspconfig = require("lspconfig")
+						lspconfig.jdtls.setup = function()
+							return true
+						end
 					end,
 				},
 			})
