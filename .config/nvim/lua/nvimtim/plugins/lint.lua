@@ -9,7 +9,6 @@ return {
 			local lint = require("lint")
 			lint.linters_by_filetype = {
 				markdown = nil,
-				c = { "cpplint" },
 				python = { "mypy", "ruff" },
 				-- java = { "checkstyle" },
 				text = nil,

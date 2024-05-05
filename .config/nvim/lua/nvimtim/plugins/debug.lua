@@ -20,7 +20,7 @@ return {
 		"jay-babu/mason-nvim-dap.nvim",
 
 		-- Add your own debuggers here
-		"leoluz/nvim-dap-go",
+		"mfussenegger/nvim-dap-python",
 	},
 	config = function()
 		local dap = require("dap")
@@ -39,7 +39,6 @@ return {
 			-- online, please don't ask me how to install them :)
 			ensure_installed = {
 				-- Update this to ensure that you have the debuggers for the langs you want
-				-- "java-debug-adapter",
 			},
 		})
 
@@ -81,5 +80,9 @@ return {
 		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
 		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 		dap.listeners.before.event_exited["dapui_config"] = dapui.close
+
+		-- Install language specific debuggers
+		local debugpy_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+		require("dap-python").setup(debugpy_path)
 	end,
 }

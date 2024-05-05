@@ -8,7 +8,6 @@ return {
 		conform.setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
-				c = { "clang_format" },
 				python = { "isort", "black" },
 				-- java = { "google-java-format" },
 				-- Use the "*" filetype to run formatters on all filetypes.
