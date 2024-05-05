@@ -166,15 +166,12 @@ return {
 				"isort", --Python Formatter
 				--JAVA:
 				"jdtls", --Java Language Server
-				"google-java-format", --Java Formatter
 				"java-test",
 				"java-debug-adapter",
 				--JAVASCRIPT/TS:
 				"typescript-language-server",
 				"html-lsp",
 				"vale", --Markdown Linter
-				-- "gopls", --Go LSP
-				--"rust-analyzer", --Rust LSP
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

@@ -53,16 +53,16 @@ local config = {
 			},
 			configuration = {
 				updateBuildConfiguration = "interactive",
-				-- runtimes = {
-				-- 	{
-				-- 		name = "JavaSE-11",
-				-- 		path = "~/.sdkman/candidates/java/11.0.17-tem",
-				-- 	},
-				-- 	{
-				-- 		name = "JavaSE-18",
-				-- 		path = "~/.sdkman/candidates/java/18.0.2-sem",
-				-- 	},
-				-- },
+				runtimes = {
+					{
+						name = "JavaSE-17",
+						path = "/usr/lib/jvm/java-17-openjdk/",
+					},
+					{
+						name = "JavaSE-21",
+						path = "/usr/lib/jvm/java-21-openjdk/",
+					},
+				},
 			},
 			maven = {
 				downloadSources = true,
