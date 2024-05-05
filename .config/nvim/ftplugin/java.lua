@@ -5,7 +5,6 @@ if not status then
 end
 
 local home = os.getenv("HOME")
-local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
 local os_config = "linux"
 local debug_path = vim.fn.glob(
 	home
