@@ -16,7 +16,6 @@
         "memory",
         "battery",
         "clock",
-        "custom/exit"
     ],
     "hyprland/window": {
 		"max-length": 60,

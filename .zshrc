@@ -9,6 +9,8 @@ export JAVA_HOME
 export PATH="/usr/lib/jvm/java-21-openjdk/bin":$PATH
 export PATH="/home/tim/.local/share/nvim/mason/packages/jdtls/jdtls":$PATH
 
+. "$HOME/.asdf/asdf.sh"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
