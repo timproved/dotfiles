@@ -26,6 +26,10 @@ sudo pacman -S gcc npm rust ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols ttf-f
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 ```
 Stuff you'd might like:
+* Zoxide:
+```sh
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+```
 * Oh My Zsh:
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
