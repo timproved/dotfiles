@@ -109,4 +109,8 @@ source $ZSH/oh-my-zsh.sh
  alias vi="nvim"
  alias la="ls -a"
  alias shutdown="shutdown now"
-# Alias for RDP connection to Windows VM
+ alias cd="z"
+
+ #Zoxide
+eval "$(zoxide init zsh)"
+export PATH=$PATH:$HOME/go/bin

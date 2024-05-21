@@ -8,10 +8,7 @@ return {
 		config = function()
 			local lint = require("lint")
 			lint.linters_by_filetype = {
-				markdown = nil,
 				python = { "mypy", "ruff" },
-				-- java = { "checkstyle" },
-				text = nil,
 			}
 			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 

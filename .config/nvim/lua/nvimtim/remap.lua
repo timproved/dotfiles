@@ -1,6 +1,13 @@
 vim.g.mapleader = " "
 --UndoTree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndoTreeToggle, { desc = "Toggle UndoTree" })
+
+-- Resize window using <ctrl> arrow keys
+vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
+vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+
 --vim.keymap.set("n", "<leader>pv", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "NetRW me daddy" })
 -- Jump up and down stay centered
@@ -33,14 +40,6 @@ vim.keymap.set("n", "<leader>td", function()
 	require("trouble").toggle("document_diagnostics")
 end, { desc = "Toggle Trouble Document Diagnostics" })
 -- Disable arrow keys
-vim.api.nvim_set_keymap("n", "<Up>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Down>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Left>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Right>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Up>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Down>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Left>", "<Nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Right>", "<Nop>", { noremap = true, silent = true })
 -- Obsidian
 vim.keymap.set(
 	"n",
