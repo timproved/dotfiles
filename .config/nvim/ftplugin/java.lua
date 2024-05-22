@@ -105,17 +105,25 @@ local config = {
 		},
 		extendedClientCapabilities = extendedClientCapabilities,
 	},
-	init_options = {
-		bundles = {
-			debug_path,
-			test_path,
-		},
-	},
+	init_options = { bundles = {
+		debug_path,
+		test_path,
+	} },
 }
+
+-- config["on_attach"] = function(client, bufnr)
+-- 	local _, _ = pcall(vim.lsp.codelens.refresh)
+-- 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
+-- end
 
 config["on_attach"] = function(client, bufnr)
 	local _, _ = pcall(vim.lsp.codelens.refresh)
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
+	-- require(vim.lsp.buf_attach_client(client, bufnr))
+	local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
+	if status_ok then
+		jdtls_dap.setup_dap_main_class_configs()
+	end
 end
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

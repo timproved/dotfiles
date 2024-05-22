@@ -9,12 +9,22 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				-- java = { "google-java-format" },
-				-- Use the "*" filetype to run formatters on all filetypes.
-				["*"] = { "codespell" },
-				-- Use the "_" filetype to run formatters on filetypes that don't
-				-- have other formatters configured.
-				["_"] = {},
+				["javascript"] = { "prettier" },
+				["javascriptreact"] = { "prettier" },
+				["typescript"] = { "prettier" },
+				["typescriptreact"] = { "prettier" },
+				["vue"] = { "prettier" },
+				["css"] = { "prettier" },
+				["scss"] = { "prettier" },
+				["less"] = { "prettier" },
+				["html"] = { "prettier" },
+				["json"] = { "prettier" },
+				["jsonc"] = { "prettier" },
+				["yaml"] = { "prettier" },
+				["markdown"] = { "prettier" },
+				["markdown.mdx"] = { "prettier" },
+				["graphql"] = { "prettier" },
+				["handlebars"] = { "prettier" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

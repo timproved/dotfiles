@@ -6,7 +6,7 @@ line-uses-inside
 line-uses-ring
 
 # bg
-image=~/.config/hypr/wallpaper/ArchPapers/6.png
+image= ~/.local/share/backgrounds/blackBG.jpg
 scaling=center
 color=161821a0
 
