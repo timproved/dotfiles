@@ -18,6 +18,8 @@ return {
 			require("mini.surround").setup()
 
 			require("mini.comment").setup()
+
+			require("mini.bufremove").setup()
 		end,
 	},
 }

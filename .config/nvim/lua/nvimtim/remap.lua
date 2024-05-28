@@ -1,13 +1,17 @@
 vim.g.mapleader = " "
 --UndoTree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndoTreeToggle, { desc = "Toggle UndoTree" })
+-- Move to window using the <ctrl> hjkl keys
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
 -- Resize window using <ctrl> arrow keys
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
 vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
-
 --vim.keymap.set("n", "<leader>pv", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "NetRW me daddy" })
 -- Jump up and down stay centered
@@ -23,9 +27,14 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>rs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace" })
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 --Buffers
-vim.api.nvim_set_keymap("n", "<S-h>", ":bprevious<enter>", { noremap = false, desc = "jump top previous buffer" })
-vim.api.nvim_set_keymap("n", "<S-l>", ":bnext<enter>", { noremap = false, desc = "jump to next buffer" })
-vim.api.nvim_set_keymap("n", "<C-c>", ":bdelete<enter>", { noremap = false, desc = "delete this buffer" })
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>bd", ":lua MiniBufremove.delete()<cr>", { desc = "Delete Buffer" })
+vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 --DAP Stuff
 vim.keymap.set("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
 vim.keymap.set("n", "<leader>dr", "<cmd> DapContinue <CR>")
