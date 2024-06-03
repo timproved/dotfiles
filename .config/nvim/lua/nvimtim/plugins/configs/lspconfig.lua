@@ -10,10 +10,12 @@ M.defaults = function()
 	require("lspconfig").pyright.setup({
 		on_attach = M.on_attach,
 		capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		filetypes = { "python" },
 	})
-	require("lspconfig").ruff_lsp.setup({
+	require("lspconfig").ruff.setup({
 		on_attach = M.on_attach,
 		capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		filetypes = { "python" },
 	})
 end
 

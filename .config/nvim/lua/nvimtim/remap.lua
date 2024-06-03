@@ -33,33 +33,5 @@ vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>bd", ":lua MiniBufremove.delete()<cr>", { desc = "Delete Buffer" })
+vim.keymap.set("n", "<C-c>", ":lua MiniBufremove.delete()<cr>", { desc = "Delete Buffer" })
 vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
---DAP Stuff
-vim.keymap.set("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
-vim.keymap.set("n", "<leader>dr", "<cmd> DapContinue <CR>")
---Trouble
-vim.keymap.set("n", "<leader>tt", function()
-	require("trouble").toggle()
-end, { desc = "Toggle Trouble" })
-vim.keymap.set("n", "<leader>tw", function()
-	require("trouble").toggle("workspace_diagnostics")
-end, { desc = "Toggle Trouble Workspace Diagnostics" })
-vim.keymap.set("n", "<leader>td", function()
-	require("trouble").toggle("document_diagnostics")
-end, { desc = "Toggle Trouble Document Diagnostics" })
--- Disable arrow keys
--- Obsidian
-vim.keymap.set(
-	"n",
-	"<leader>oc",
-	"<cmd>lua require('obsidian').util.toggle_checkbox()<CR>",
-	{ desc = "Obsidian Check Checkbox" }
-)
-vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianTemplate<CR>", { desc = "Insert Obsidian Template" })
-vim.keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<CR>", { desc = "Open in Obsidian App" })
-vim.keymap.set("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Show ObsidianBacklinks" })
-vim.keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<CR>", { desc = "Show ObsidianLinks" })
-vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "Create New Note" })
-vim.keymap.set("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "Search Obsidian" })
-vim.keymap.set("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Quick Switch" })

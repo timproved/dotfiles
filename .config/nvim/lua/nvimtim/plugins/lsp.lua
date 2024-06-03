@@ -34,7 +34,6 @@ return {
 			local servers = {
 				bashls = true,
 				dockerls = true,
-				docker_compose_language_service = true,
 				tailwindcss = true,
 				lemminx = true,
 				lua_ls = {
@@ -92,6 +91,7 @@ return {
 				--Python:
 				"pyright",
 				"ruff_lsp",
+				"debugpy",
 				"mypy",
 				"ruff",
 				"black",

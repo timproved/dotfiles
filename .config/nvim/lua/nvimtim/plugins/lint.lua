@@ -10,6 +10,7 @@ return {
 			lint.linters_by_filetype = {
 				python = { "mypy", "ruff" },
 				markdown = { "markdownlint" },
+				dockerfile = { "hadolint" },
 			}
 			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
