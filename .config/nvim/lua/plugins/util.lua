@@ -1,38 +1,4 @@
 return {
-	-- Dadbod
-	{
-		"tpope/vim-dadbod",
-		"kristijanhusak/vim-dadbod-completion",
-		"kristijanhusak/vim-dadbod-ui",
-	},
-	-- Database Client
-	-- For now, I'm going to stick with dadbod,
-	-- but if the completion continues to improve I will probably switch
-	{
-		"kndndrj/nvim-dbee",
-		enabled = false,
-		dependencies = { "MunifTanjim/nui.nvim" },
-		build = function()
-			require("dbee").install()
-		end,
-		config = function()
-			local source = require("dbee.sources")
-			require("dbee").setup({
-				sources = {
-					source.MemorySource:new({
-						---@diagnostic disable-next-line: missing-fields
-						{
-							type = "postgres",
-							name = "mydb",
-							url = "postgresql://tim:password@localhost:5432/mydb",
-						},
-					}, "mydb"),
-				},
-			})
-			require("custom.dbee")
-		end,
-	},
-
 	-- Markdown Preview
 	{
 		"iamcco/markdown-preview.nvim",

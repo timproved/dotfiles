@@ -8,7 +8,7 @@ JAVA_HOME="/usr/lib/jvm/java-21-openjdk/"
 export JAVA_HOME
 export PATH="/usr/lib/jvm/java-21-openjdk/bin":$PATH
 export PATH="/home/tim/.local/share/nvim/mason/packages/jdtls/jdtls":$PATH
-
+export PATH=~/.npm-global/bin:$PATH
 . "$HOME/.asdf/asdf.sh"
 
 # Set name of the theme to load --- if set to "random", it will

@@ -3,22 +3,30 @@ if not status then
 	vim.notify("jdtls not found", vim.log.levels.ERROR)
 	return
 end
-
 local home = os.getenv("HOME")
 local os_config = "linux"
-local debug_path = vim.fn.glob(
-	home
-		.. "/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
-)
-local test_path = vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-test/extension/server/*.jar")
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath("data") .. "/site/java/workspace-root/" .. project_name
-os.execute("mkdir " .. workspace_dir)
 
-local capabilities = require("cmp_nvim_lsp").capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
+-- Needed for debugging
+local bundles = {
+	vim.fn.glob(
+		vim.env.HOME .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"
+	),
+}
+
+-- Needed for running/debugging unit tests
+vim.list_extend(
+	bundles,
+	vim.split(vim.fn.glob(vim.env.HOME .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n")
+)
 
 local config = {
 	cmd = {
@@ -44,7 +52,6 @@ local config = {
 	},
 	root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
 	capabilities = capabilities,
-
 	settings = {
 		java = {
 			eclipse = {
@@ -80,51 +87,122 @@ local config = {
 			format = {
 				enabled = true,
 				settings = {
-					url = vim.fn.stdpath("config") .. "/lang-servers/intellij-java-google-java-format.xml",
-					profile = "GoogleStyle",
+					url = vim.fn.stdpath("config") .. "/lang-servers/intellij-java-google-style.xml",
+					profile = "intellij",
+				},
+			},
+			signatureHelp = { enabled = true },
+			completion = {
+				favoriteStaticMembers = {
+					"org.hamcrest.MatcherAssert.assertThat",
+					"org.hamcrest.Matchers.*",
+					"org.hamcrest.CoreMatchers.*",
+					"org.junit.jupiter.api.Assertions.*",
+					"java.util.Objects.requireNonNull",
+					"java.util.Objects.requireNonNullElse",
+					"org.mockito.Mockito.*",
+				},
+				importOrder = {
+					"java",
+					"javax",
+					"com",
+					"org",
 				},
 			},
 		},
-		signatureHelp = { enabled = true },
-		completion = {
-			favoriteStaticMembers = {
-				"org.hamcrest.MatcherAssert.assertThat",
-				"org.hamcrest.Matchers.*",
-				"org.hamcrest.CoreMatchers.*",
-				"org.junit.jupiter.api.Assertions.*",
-				"java.util.Objects.requireNonNull",
-				"java.util.Objects.requireNonNullElse",
-				"org.mockito.Mockito.*",
-			},
-			importOrder = {
-				"java",
-				"javax",
-				"com",
-				"org",
-			},
-		},
+	},
+	init_options = {
+		bundles = bundles,
 		extendedClientCapabilities = extendedClientCapabilities,
 	},
-	init_options = { bundles = {
-		debug_path,
-		test_path,
-	} },
 }
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local bufnr = args.buf
+		local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
+		if client and client.name == "jdtls" then
+			local _, _ = pcall(vim.lsp.codelens.refresh)
+			require("jdtls").setup_dap({ hotcodereplace = "auto" })
+			-- Comment out the following line if you don't want intellij like inlay hints
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+			require("jdtls.dap").setup_dap_main_class_configs()
 
--- config["on_attach"] = function(client, bufnr)
+			vim.opt.tabstop = 4
+			vim.opt.shiftwidth = 4
+
+			local builtin = require("telescope.builtin")
+			vim.keymap.set(
+				"n",
+				"<leader>co",
+				"<Cmd>lua require'jdtls'.organize_imports()<CR>",
+				{ desc = "Organize Imports" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>crv",
+				"<Cmd>lua require('jdtls').extract_variable()<CR>",
+				{ desc = "Extract Variable" }
+			)
+			vim.keymap.set(
+				"v",
+				"<leader>crv",
+				"<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
+				{ desc = "Extract Variable" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>crc",
+				"<Cmd>lua require('jdtls').extract_constant()<CR>",
+				{ desc = "Extract Constant" }
+			)
+			vim.keymap.set(
+				"v",
+				"<leader>crc",
+				"<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>",
+				{ desc = "Extract Constant" }
+			)
+			vim.keymap.set(
+				"v",
+				"<leader>crm",
+				"<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>",
+				{ desc = "Extract Method" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>Jt",
+				"<Cmd> lua require('jdtls').test_nearest_method()<CR>",
+				{ desc = "[J]ava [T]est Method" }
+			)
+			-- Set a Vim motion to <Space> + <Shift>J + t to run the test method that is currently selected in visual mode
+			vim.keymap.set(
+				"v",
+				"<leader>Jt",
+				"<Esc><Cmd> lua require('jdtls').test_nearest_method(true)<CR>",
+				{ desc = "[J]ava [T]est Method" }
+			)
+			-- Set a Vim motion to <Space> + <Shift>J + <Shift>T to run an entire test suite (class)
+			vim.keymap.set(
+				"n",
+				"<leader>JT",
+				"<Cmd> lua require('jdtls').test_class()<CR>",
+				{ desc = "[J]ava [T]est Class" }
+			)
+			-- Set a Vim motion to <Space> + <Shift>J + u to update the project configuration
+			vim.keymap.set("n", "<leader>Ju", "<Cmd> JdtUpdateConfig<CR>", { desc = "[J]ava [U]pdate Config" })
+		end
+	end,
+})
+
+-- config.on_attach = function(client, bufnr)
 -- 	local _, _ = pcall(vim.lsp.codelens.refresh)
 -- 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
+-- 	-- Comment out the following line if you don't want intellij like inlay hints
+-- 	vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+-- 	local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
+-- 	if status_ok then
+-- 		jdtls_dap.setup_dap_main_class_configs()
+-- 	end
 -- end
-
-config["on_attach"] = function(client, bufnr)
-	local _, _ = pcall(vim.lsp.codelens.refresh)
-	require("jdtls").setup_dap({ hotcodereplace = "auto" })
-	require("nvimtim.plugins.configs.lspconfig").on_attach(client, bufnr)
-	local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
-	if status_ok then
-		jdtls_dap.setup_dap_main_class_configs()
-	end
-end
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	pattern = { "*.java" },
@@ -134,25 +212,3 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 })
 
 require("jdtls").start_or_attach(config)
-
-vim.keymap.set("n", "<leader>co", "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
-vim.keymap.set("n", "<leader>crv", "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = "Extract Variable" })
-vim.keymap.set(
-	"v",
-	"<leader>crv",
-	"<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
-	{ desc = "Extract Variable" }
-)
-vim.keymap.set("n", "<leader>crc", "<Cmd>lua require('jdtls').extract_constant()<CR>", { desc = "Extract Constant" })
-vim.keymap.set(
-	"v",
-	"<leader>crc",
-	"<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>",
-	{ desc = "Extract Constant" }
-)
-vim.keymap.set(
-	"v",
-	"<leader>crm",
-	"<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>",
-	{ desc = "Extract Method" }
-)

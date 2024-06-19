@@ -8,7 +8,7 @@ return {
 			require("bufferline").setup({
 				options = {
 					mode = "buffers", -- set to "tabs" to only show tabpages instead
-					themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
+					themable = false, -- allows highlight groups to be overriden i.e. sets highlights as default
 					numbers = "none",
 					indicator = {
 						icon = "▎", -- this should be omitted if indicator style is not 'icon'
@@ -34,8 +34,8 @@ return {
 					max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
 					truncate_names = true, -- whether or not tab names should be truncated
 					tab_size = 18,
-					diagnostics = "false", -- "nvim_lsp", "coc", "ale", "or null" so
-					diagnostics_update_in_insert = false,
+					diagnostics = "nvim_lsp", -- "nvim_lsp", "coc", "ale", "or null" so
+					diagnostics_update_in_insert = "",
 					-- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
 					diagnostics_indicator = function(count, level, diagnostics_dict, context)
 						return "(" .. count .. ")"
@@ -377,6 +377,51 @@ return {
 				["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
 				["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
 				["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+			})
+		end,
+	},
+	-- lazy.nvim
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+					},
+					signature = {
+						enabled = false,
+					},
+					progress = {
+						enabled = false,
+					},
+				},
+				cmdline = {
+					enabled = false,
+				},
+				messages = {
+					enabled = false,
+				},
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+				popupmenu = {
+					enabled = false,
+				},
+				notify = { false },
 			})
 		end,
 	},
