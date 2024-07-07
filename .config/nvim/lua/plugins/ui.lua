@@ -8,7 +8,7 @@ return {
 			require("bufferline").setup({
 				options = {
 					mode = "buffers", -- set to "tabs" to only show tabpages instead
-					themable = false, -- allows highlight groups to be overriden i.e. sets highlights as default
+					themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
 					numbers = "none",
 					indicator = {
 						icon = "▎", -- this should be omitted if indicator style is not 'icon'
@@ -38,7 +38,8 @@ return {
 					diagnostics_update_in_insert = "",
 					-- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
 					diagnostics_indicator = function(count, level, diagnostics_dict, context)
-						return "(" .. count .. ")"
+						local icon = level:match("error") and " " or " "
+						return " " .. icon .. count
 					end,
 					-- NOTE: this will be called a lot so don't do any heavy processing here
 					custom_filter = function(buf_number, buf_numbers)
@@ -119,10 +120,68 @@ return {
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			require("lualine").setup({
+			local lualine = require("lualine")
+			local colors = {
+				bg = "#16141f",
+				base = "#191724",
+				surface = "#1f1d2e",
+				overlay = "#26233a",
+				muted = "#6e6a86",
+				subtle = "#908caa",
+				text = "#e0def4",
+				love = "#eb6f92",
+				gold = "#f6c177",
+				rose = "#ebbcba",
+				pine = "#31748f",
+				foam = "#9ccfd8",
+				iris = "#c4a7e7",
+				highlight_low = "#21202e",
+				highlight_med = "#403d52",
+				highlight_high = "#524f67",
+				fg = "#ffffff",
+			}
+
+			local custom = {
+				normal = {
+					a = { bg = colors.rose, fg = colors.bg, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.rose },
+					c = { bg = colors.overlay, fg = colors.fg },
+				},
+				insert = {
+					a = { bg = colors.foam, fg = colors.bg, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.foam },
+					c = { bg = colors.overlay, fg = colors.fg },
+				},
+				visual = {
+					a = { bg = colors.iris, fg = colors.bg, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.iris },
+					c = { bg = colors.overlay, fg = colors.fg },
+				},
+				command = {
+					a = { bg = colors.love, fg = colors.bg, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.love },
+					c = { bg = colors.overlay, fg = colors.fg },
+				},
+				replace = {
+					a = { bg = colors.pine, fg = colors.bg, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.pine },
+					c = { bg = colors.overlay, fg = colors.fg },
+				},
+				terminal = {
+					a = { bg = colors.pine, fg = colors.bg, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.pine },
+					c = { bg = colors.overlay, fg = colors.fg },
+				},
+				inactive = {
+					a = { bg = colors.surface, fg = colors.semilightgray, gui = "bold" },
+					b = { bg = colors.surface, fg = colors.semilightgray },
+					c = { bg = colors.surface, fg = colors.semilightgray },
+				},
+			}
+			lualine.setup({
 				options = {
 					icons_enabled = true,
-					theme = "auto",
+					theme = custom,
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },
 					disabled_filetypes = {
@@ -131,7 +190,7 @@ return {
 					},
 					ignore_focus = {},
 					always_divide_middle = true,
-					globalstatus = false,
+					globalstatus = true,
 					refresh = {
 						statusline = 1000,
 						tabline = 1000,
@@ -140,7 +199,7 @@ return {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_b = { "branch", "diagnostics" },
 					lualine_c = { "filename" },
 					lualine_x = { "encoding", "fileformat", "filetype" },
 					lualine_y = {
@@ -149,6 +208,9 @@ return {
 					lualine_z = { { "location", padding = { left = 0, right = 1 } } },
 				},
 				extensions = { "neo-tree", "lazy" },
+				tabline = {},
+				winbar = {},
+				inactive_winbar = {},
 			})
 		end,
 	},
@@ -166,25 +228,84 @@ return {
 	--Neotree File Tree
 	{
 		"nvim-neo-tree/neo-tree.nvim",
-		version = "*",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim",
-		},
+		branch = "v3.x",
 		cmd = "Neotree",
 		keys = {
 			{ "\\", ":Neotree reveal<CR>", { desc = "NeoTree reveal" } },
 		},
-		opts = {
-			filesystem = {
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
+		config = function()
+			vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+			vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+			vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+			vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+
+			require("neo-tree").setup({
+				print("FOOBAR"),
+				close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+				popup_border_style = "rounded",
+				enable_git_status = true,
+				enable_diagnostics = true,
+				open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
+				default_component_configs = {
+					icon = {
+						folder_closed = "",
+						folder_open = "",
+						folder_empty = "󰜌",
+						default = "*",
+						highlight = "NeoTreeFileIcon",
+					},
+					modified = {
+						symbol = "[+]",
+						highlight = "NeoTreeModified",
+					},
+					name = {
+						trailing_slash = false,
+						use_git_status_colors = true,
+						highlight = "NeoTreeFileName",
+					},
+					git_status = {
+						symbols = {
+							-- Change type
+							added = "✚",
+							modified = "",
+							deleted = "✖", -- this can only be used in the git_status source
+							renamed = "󰁕", -- this can only be used in the git_status source
+							-- Status type
+							untracked = "",
+							ignored = "",
+							unstaged = "󰄱",
+							staged = "",
+							conflict = "",
+						},
+					},
+				},
+				commands = {},
 				window = {
+					position = "left",
+					width = 40,
 					mappings = {
 						["\\"] = "close_window",
 					},
 				},
-			},
-		},
+				filesystem = {
+					filtered_items = {
+						visible = false, -- when true, they will just be displayed differently than normal items
+						hide_dotfiles = true,
+						hide_gitignored = true,
+						hide_hidden = true, -- only works on Windows for hidden files/directories
+						window = {
+							mappings = {},
+						},
+					},
+				},
+			})
+		end,
 	},
 
 	--UndoTree

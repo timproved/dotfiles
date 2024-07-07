@@ -33,11 +33,21 @@ return {
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
+				signs = {
+					add = { text = "▎" },
+					change = { text = "▎" },
+					delete = { text = "" },
+					topdelete = { text = "" },
+					changedelete = { text = "▎" },
+					untracked = { text = "▎" },
+				},
+				signs_staged = {
+					add = { text = "▎" },
+					change = { text = "▎" },
+					delete = { text = "" },
+					topdelete = { text = "" },
+					changedelete = { text = "▎" },
+				},
 			},
 		},
 	},
@@ -66,7 +76,7 @@ return {
 			{
 				"<leader>cl",
 				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-				desc = "LSP Definitions / references / ... (Trouble)",
+				desc = "LSP Definitions /references / ... (Trouble)",
 			},
 			{
 				"<leader>xL",
@@ -98,6 +108,7 @@ return {
 						refresh = "gr",
 						open = "<M-CR>",
 					},
+
 					layout = {
 						position = "bottom", -- | top | left | right
 						ratio = 0.4,

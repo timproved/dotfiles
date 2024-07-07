@@ -110,6 +110,7 @@ source $ZSH/oh-my-zsh.sh
  alias la="ls -a"
  alias shutdown="shutdown now"
  alias cd="z"
+ alias tmux="TERM=screen-256color-bce tmux"
 
  #Zoxide
 eval "$(zoxide init zsh)"
