@@ -1,6 +1,7 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
+		lazy = "VeryLazy",
 		dependencies = {
 			-- Creates a beautiful debugger UI
 			"rcarriga/nvim-dap-ui",
@@ -46,6 +47,7 @@ return {
 	},
 	{
 		"nvim-neotest/neotest",
+		lazy = "VeryLazy",
 		dependencies = {
 			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",

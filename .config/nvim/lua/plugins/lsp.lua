@@ -81,12 +81,8 @@ return {
 					bashls = {},
 					dockerls = {},
 					tailwindcss = {
-						-- exclude a filetype from the default_config
 						filetypes_exclude = { "markdown" },
-						-- add additional filetypes to the default_config
 						filetypes_include = {},
-						-- to fully override the default_config, change the below
-						-- filetypes = {}
 					},
 					lemminx = {},
 					marksman = {
@@ -126,6 +122,22 @@ return {
 						},
 					},
 					clangd = {
+						filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+						keys = {
+							{
+								"<leader>ch",
+								"<cmd>ClangdSwitchSourceHeader<cr>",
+								desc = "Switch Source/Header (C/C++)",
+							},
+						},
+						root = {
+							".clangd",
+							".clang-tidy",
+							".clang-format",
+							"compile_commands.json",
+							"compile_flags.txt",
+							"configure.ac", -- AutoTools
+						},
 						capabilities = {
 							offsetEncoding = { "utf-16" },
 						},
@@ -143,7 +155,6 @@ return {
 							completeUnimported = true,
 							clangdFileStatus = true,
 						},
-						filetypes = { "c", "cpp" },
 					},
 				},
 				setup = {
@@ -266,6 +277,8 @@ return {
 			ensure_installed = {
 				"stylua",
 				"shfmt",
+				-- C / CPP
+				"clang-format",
 				--Java:
 				"jdtls",
 				"java-debug-adapter",

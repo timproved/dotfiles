@@ -34,6 +34,7 @@ return {
 				completion = { completeopt = "menu,menuone,noinsert" },
 				view = {
 					entries = { selection_order = "near_cursor", follow_cursor = true, name = "custom" },
+                    anchor = "bottom"
 				},
 
 				mapping = cmp.mapping.preset.insert({
@@ -77,7 +78,6 @@ return {
 						show_labelDetails = true,
 					}),
 				},
-				window = {},
 			})
 			-- require("cmp").setup({
 			-- 	enabled = function()
