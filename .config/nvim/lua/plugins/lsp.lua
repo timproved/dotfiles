@@ -1,10 +1,15 @@
 return {
-	-- lspconfig
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"mason.nvim",
+			{
+				"williamboman/mason.nvim",
+				event = "VeryLazy",
+				cmd = "Mason",
+				build = ":MasonUpdate",
+			},
 			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			"b0o/SchemaStore.nvim",
 		},
 		opts = function()
@@ -17,9 +22,6 @@ return {
 						spacing = 4,
 						source = "if_many",
 						prefix = "●",
-						-- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-						-- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-						-- prefix = "icons",
 					},
 					severity_sort = true,
 					signs = {
@@ -166,70 +168,13 @@ return {
 		end,
 
 		config = function(_, opts)
-			local servers = opts.servers
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-			local function setup(server)
-				local server_opts = vim.tbl_deep_extend("force", {
-					capabilities = vim.deepcopy(capabilities),
-				}, servers[server] or {})
-
-				if opts.setup[server] then
-					if opts.setup[server](server, server_opts) then
-						return
-					end
-				elseif opts.setup["*"] then
-					if opts.setup["*"](server, server_opts) then
-						return
-					end
-				end
-				require("lspconfig")[server].setup(server_opts)
-			end
-
-			-- get all the servers that are available through mason-lspconfig
-			local have_mason, mlsp = pcall(require, "mason-lspconfig")
-			local all_mslp_servers = {}
-			if have_mason then
-				all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-			end
-
-			local ensure_installed = {} ---@type string[]
-			for server, server_opts in pairs(servers) do
-				if server_opts then
-					server_opts = server_opts == true and {} or server_opts
-					if server_opts.enabled ~= false then
-						-- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-						if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-							setup(server)
-						else
-							ensure_installed[#ensure_installed + 1] = server
-						end
-					end
-				end
-			end
-
-			if have_mason then
-				mlsp.setup({
-					ensure_installed = vim.tbl_deep_extend(
-						"force",
-						ensure_installed,
-						require("mason-lspconfig").ensure_installed or {}
-					),
-					handlers = { setup },
-				})
-			end
-
 			vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
 			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 				callback = function(args)
 					local bufnr = args.buf
 					local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
-
-					local settings = servers[client.name]
-					if type(settings) ~= "table" then
-						settings = {}
-					end
 
 					-- -- I don't know if I like this better than noice.nvims lsp signatures
 					require("lsp_signature").on_attach({
@@ -262,19 +207,23 @@ return {
 					map("K", vim.lsp.buf.hover, "Hover Documentation")
 					map("gk", vim.lsp.buf.signature_help, "Signature Help")
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+						map("<leader>th", function()
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
+						end, "[T]oggle Inlay [H]ints")
+					end
 				end,
 			})
-		end,
-	},
 
-	-- cmdline tools and lsp servers
-	{
+			local servers = opts.servers
 
-		"williamboman/mason.nvim",
-		cmd = "Mason",
-		build = ":MasonUpdate",
-		opts = {
-			ensure_installed = {
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+			require("mason").setup()
+			local ensure_installed = vim.tbl_keys(servers or {})
+			vim.list_extend(ensure_installed, {
 				"stylua",
 				"shfmt",
 				-- C / CPP
@@ -297,32 +246,23 @@ return {
 				"eslint_d",
 				--Markdown
 				"markdownlint",
-			},
-		},
-		---@param opts MasonSettings | {ensure_installed: string[]}
-		config = function(_, opts)
-			require("mason").setup(opts)
-			local mr = require("mason-registry")
-			mr:on("package:install:success", function()
-				vim.defer_fn(function()
-					-- trigger FileType event to possibly load this newly installed LSP server
-					require("lazy.core.handler.event").trigger({
-						event = "FileType",
-						buf = vim.api.nvim_get_current_buf(),
-					})
-				end, 100)
-			end)
-
-			mr.refresh(function()
-				for _, tool in ipairs(opts.ensure_installed) do
-					local p = mr.get_package(tool)
-					if not p:is_installed() then
-						p:install()
-					end
-				end
-			end)
+			})
+			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+			require("mason-lspconfig").setup({
+				handlers = {
+					function(server_name)
+						local server = servers[server_name] or {}
+						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						require("lspconfig")[server_name].setup(server)
+					end,
+					["jdtls"] = function()
+						return true
+					end,
+				},
+			})
 		end,
 	},
+
 	{
 		"ray-x/lsp_signature.nvim",
 		event = "VeryLazy",
