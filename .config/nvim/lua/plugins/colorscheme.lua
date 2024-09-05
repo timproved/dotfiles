@@ -1,26 +1,5 @@
 return {
 	{
-		"folke/tokyonight.nvim",
-		config = function()
-			require("tokyonight").setup({ -- your configuration comes here
-				-- or leave it empty to use the default settings
-				style = "storm", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-				transparent = true, -- Enable this to disable setting the background color
-				terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-				styles = {
-					-- Style to be applied to different syntax groups
-					-- Value is any valid attr-list value for `:help nvim_set_hl`
-					comments = { italic = false },
-					keywords = { italic = false },
-					-- Background styles. Can be "dark", "transparent" or "normal"
-					sidebars = "transparent", -- style for sidebars, see below
-					floats = "transparent", -- style for floating windowsawdawd
-				},
-			})
-			-- vim.cmd("colorscheme tokyonight")
-		end,
-	},
-	{
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
@@ -72,36 +51,7 @@ return {
 					h6 = "foam",
 				},
 			})
-			-- vim.cmd("colorscheme rose-pine")
-		end,
-	},
-	{
-		"shaunsingh/nord.nvim",
-		lazy = false,
-		config = function()
-			local highlights = require("nord").bufferline.highlights({
-				italic = false,
-				bold = true,
-			})
-
-			require("bufferline").setup({
-				options = {
-					separator_style = "thin",
-				},
-				highlights = highlights,
-			})
-
-			-- Example config in lua
-			vim.g.nord_contrast = false
-			vim.g.nord_borders = true
-			vim.g.nord_disable_background = true
-			vim.g.nord_italic = false
-			vim.g.nord_uniform_diff_background = true
-			vim.g.nord_bold = true
-
-			-- Load the colorscheme
-			require("nord").set()
-			vim.cmd.colorscheme("nord")
+			vim.cmd("colorscheme rose-pine-moon")
 		end,
 	},
 }

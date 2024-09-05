@@ -34,16 +34,16 @@ return {
 				null_ls.builtins.diagnostics.mypy,
 				null_ls.builtins.formatting.isort,
 				--Java
-				null_ls.builtins.formatting.google_java_format.with({
-					extra_args = function(params)
-						return params.options
-							and params.options.tabSize
-							and {
-								"--tab-width",
-								params.options.tabSize,
-							}
-					end,
-				}),
+				-- null_ls.builtins.formatting.google_java_format.with({
+				-- 	extra_args = function(params)
+				-- 		return params.options
+				-- 			and params.options.tabSize
+				-- 			and {
+				-- 				"--tab-width",
+				-- 				params.options.tabSize,
+				-- 			}
+				-- 	end,
+				-- }),
 				-- C / CPP
 				null_ls.builtins.formatting.clang_format,
 			},

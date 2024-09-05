@@ -9,12 +9,6 @@ local os_config = "linux"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath("data") .. "/site/java/workspace-root/" .. project_name
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-local extendedClientCapabilities = jdtls.extendedClientCapabilities
-extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
-
 -- Needed for debugging
 local bundles = {
 	vim.fn.glob(
@@ -27,6 +21,12 @@ vim.list_extend(
 	bundles,
 	vim.split(vim.fn.glob(vim.env.HOME .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n")
 )
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
 local config = {
 	cmd = {
@@ -108,7 +108,7 @@ local config = {
 		},
 	},
 	init_options = {
-		bundles = bundles,
+        bundles = bundles;
 		extendedClientCapabilities = extendedClientCapabilities,
 	},
 }
@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 		if client and client.name == "jdtls" then
 			local _, _ = pcall(vim.lsp.codelens.refresh)
-			require("jdtls").setup_dap({ hotcodereplace = "auto" })
+			require("jdtls").setup_dap()
 			-- Comment out the following line if you don't want intellij like inlay hints
 			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			require("jdtls.dap").setup_dap_main_class_configs()

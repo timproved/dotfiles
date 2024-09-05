@@ -15,8 +15,8 @@ set $fileManager thunar
 set $menu wofi --show drun
 
 ### Output configuration
-#output DP-2 resolution 3840x2160@144Hz scale 1.25
-output HDMI-A-1 resolution 3440x1440@100Hz scale 1
+output DP-2 resolution 3840x2160@144Hz scale 1.25
+# output HDMI-A-1 resolution 3440x1440@100Hz scale 1
 #output DP-2 bg ~/.local/share/backgrounds/blackBG.jpg stretch
 output HDMI-A-1 bg ~/.local/share/backgrounds/blackBG.jpg stretch
 

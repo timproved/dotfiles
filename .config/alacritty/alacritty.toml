@@ -2,19 +2,19 @@
 
 # Default colors
 [colors.primary]
-background = '#0F0E15'
-foreground = '#ffffff'
+background = '#20202a'
+foreground = '#A0ABC4'
 
 # Normal colors
 [colors.normal]
-black   = '#282c34'
-red     = '#ff6c6b'
-green   = '#98be65'
-yellow  = '#ecbe7b'
-blue    = '#51afef'
-magenta = '#c678dd'
-cyan    = '#46d9ff'
-white   = '#bbc2cf'
+black   = '#1a1a24'
+red     = '#e06b6b'
+green   = '#7d9685'
+yellow  = '#c8cca7'
+blue    = '#8BD0EC'
+magenta = '#F093D8'
+cyan    = '#b8dceb'
+white   = '#cccbd9'
 
 [font]
 size = 12
