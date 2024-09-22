@@ -4,17 +4,34 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Java 
 JAVA_HOME="/usr/lib/jvm/java-21-openjdk/"
 export JAVA_HOME
 export PATH="/usr/lib/jvm/java-21-openjdk/bin":$PATH
-export PATH="/home/tim/.local/share/nvim/mason/packages/jdtls/jdtls":$PATH
-export PATH=~/.npm-global/bin:$PATH
-. "$HOME/.asdf/asdf.sh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# Jdtls
+export PATH="/home/tim/.local/share/nvim/mason/packages/jdtls/jdtls":$PATH
+
+# npm
+export PATH=~/.npm-global/bin:$PATH
+
+# Zoxide
+eval "$(zoxide init zsh)"
+export PATH=$PATH:$HOME/go/bin
+export PATH=$HOME/.local/bin:$PATH
+
+
+# Aliases
+alias zshconfig="mate ~/.zshrc"
+alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vi="nvim"
+alias la="ls -a"
+alias shutdown="shutdown now"
+alias cd="z"
+alias tmux="TERM=screen-256color-bce tmux"
+
+
+
 ZSH_THEME="robbyrussell"
 # ZSH_THEME="edvardm"
 
@@ -104,16 +121,4 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
- alias zshconfig="mate ~/.zshrc"
- alias ohmyzsh="mate ~/.oh-my-zsh"
- alias vi="nvim"
- alias la="ls -a"
- alias shutdown="shutdown now"
- alias cd="z"
- alias tmux="TERM=screen-256color-bce tmux"
 
- #Zoxide
-eval "$(zoxide init zsh)"
-export PATH=$PATH:$HOME/go/bin
-export PATH=$HOME/.local/bin:$PATH
