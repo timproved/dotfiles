@@ -200,6 +200,7 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 include /etc/sway/config.d/*
 
+
 # EXECUTE
 exec export QT_QPA_PLATFORMTHEME=qt5ct
 exec /usr/lib/polkit-kde-authentication-agent-1 --exit-with-session sway
