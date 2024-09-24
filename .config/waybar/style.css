@@ -5,8 +5,8 @@
 }
 
 window#waybar {
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #282828;
+    color: #ebdbb2;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -25,13 +25,13 @@ button {
 
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #5eacd3;
+    box-shadow: inset 0 -3px #458588;
 }
 
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
-    color: #ffffff;
+    color: #ebdbb2;
     font-weight: bold;
 }
 
@@ -40,11 +40,11 @@ button:hover {
 }
 
 #workspaces button.focused {
-    background-color: #5eacd3;
+    background-color: #458588;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+    background-color: #fb4934;
 }
 
 #clock,
@@ -63,7 +63,7 @@ button:hover {
 #workspaces {
     margin: 0 4px;
     padding: 0 5px;
-    background-color: #111111;
+    background-color: #282828;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -77,23 +77,23 @@ button:hover {
 }
 
 #clock {
-    background-color: #111111;
+    background-color: #282828;
 }
 
 #battery {
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #282828;
+    color: #ebdbb2;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: #ffffff;
-    background-color: #26A65B;
+    color: #ebdbb2;
+    background-color: #689d6a;
 }
 
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
-    color: #ffffff;
+    color: #ebdbb2;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);
@@ -102,27 +102,27 @@ button:hover {
 }
 
 #cpu {
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #282828;
+    color: #ebdbb2;
 }
 
 #memory {
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #282828;
+    color: #ebdbb2;
 }
 
 #custom-gpu {
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #282828;
+    color: #ebdbb2;
 }
 
 #backlight {
-    background-color: #111111;
+    background-color: #282828;
 }
 
 #pulseaudio {
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #282828;
+    color: #ebdbb2;
 }
 
 #pulseaudio.muted {
@@ -131,7 +131,7 @@ button:hover {
 }
 
 #tray {
-    background-color: #111111;
+    background-color: #282828;
 }
 
 #tray > .passive {
@@ -140,12 +140,12 @@ button:hover {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
+    background-color: #fb4934;
 }
 
 @keyframes blink {
     to {
-        background-color: #ffffff;
+        background-color: #ebdbb2;
         color: #000000;
     }
 }
