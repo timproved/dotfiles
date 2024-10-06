@@ -20,6 +20,9 @@ eval "$(zoxide init zsh)"
 export PATH=$PATH:$HOME/go/bin
 export PATH=$HOME/.local/bin:$PATH
 
+# SSH
+eval "$(ssh-agent -s)"
+
 
 # Aliases
 alias zshconfig="mate ~/.zshrc"

@@ -15,9 +15,8 @@ set $fileManager thunar
 set $menu wofi --show drun
 
 ### Output configuration
-output DP-2 resolution 3840x2160@144Hz scale 1.25
-# output HDMI-A-1 resolution 3440x1440@100Hz scale 1
-#output DP-2 bg ~/.local/share/backgrounds/blackBG.jpg stretch
+output HDMI-A-1 resolution 3440x1440@100Hz scale 1
+output HDMI-A-1 bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_2048x1536.png stretch
 
 # bindswitch --reload --locked lid:on output $laptop disable
 # bindswitch --reload --locked lid:off output $laptop enable 
@@ -193,8 +192,8 @@ bindsym $mod+a focus parent
 # }
 # Font
 #set font FiraSansMono
-default_border pixel 1
-default_floating_border pixel 1
+default_border pixel 0
+default_floating_border pixel 0
 hide_edge_borders smart
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
