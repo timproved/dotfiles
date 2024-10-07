@@ -6,7 +6,7 @@ line-uses-inside
 line-uses-ring
 
 # bg
-image= ~/.local/share/backgrounds/blackBG.jpg
+image= ~/Pictures/backgrounds/staticBlack.jpg
 scaling=center
 color=161821a0
 
