@@ -6,7 +6,7 @@ line-uses-inside
 line-uses-ring
 
 # bg
-image= ~/.local/share/backgrounds/blackBG.jpg
+image= ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg
 scaling=center
 color=161821a0
 
