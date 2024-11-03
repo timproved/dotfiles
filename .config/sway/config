@@ -15,8 +15,18 @@ set $fileManager thunar
 set $menu wofi --show drun
 
 ### Output configuration
-output HDMI-A-1 resolution 1920x1080@75Hz scale 1
+output eDP-1 resolution 1920x1200@60Hz 
+output eDP-1 bg ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg stretch
+
+output HDMI-A-1 resolution 3840x2160@60Hz scale 1.25 
 output HDMI-A-1 bg ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg stretch
+
+workspace 1 output HDMI-A-1
+workspace 2 output HDMI-A-1
+workspace 3 output HDMI-A-1
+workspace 4 output HDMI-A-1
+workspace 5 output HDMI-A-1
+
 
 
 # bindswitch --reload --locked lid:on output $laptop disable
@@ -38,6 +48,7 @@ input * {
     xkb_layout "us"
     pointer_accel 0
     accel_profile flat
+	# xkb_options caps:escape
 }
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -180,19 +191,19 @@ bindsym $mod+a focus parent
 #
 # Read `man 5 sway-bar` for more information about this section.
 
-# bar {
-#     position bottom
-#
-#     # When the status_command prints a new line to stdout, swaybar updates.
-#     # The default just shows the current date and time.
-#     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-#
-#     colors {
-#         statusline #ffffff
-#         background #323232
-#         inactive_workspace #32323200 #32323200 #5c5c5c
-#     }
-# }
+bar {
+    position bottom
+
+    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    status_command ~/.config/sway/config.d/status.sh
+    font pango:FiroCode Nerd Font, FontAwesome 10
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
 # Font
 #set font FiraSansMono
 default_border pixel 0
@@ -200,10 +211,10 @@ default_floating_border pixel 0
 hide_edge_borders smart
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-include /etc/sway/config.d/*
+# include /etc/sway/config.d/*
 
 
 # EXECUTE
 exec /usr/lib/polkit-kde-authentication-agent-1 --exit-with-session sway
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway QT_QPA_PLATFORMTHEME=qt5ct
-exec waybar
+exec swaync

@@ -5,8 +5,10 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 # Java 
+JAVA_HOME="/usr/lib/jvm/java-17-openjdk/"
 JAVA_HOME="/usr/lib/jvm/java-21-openjdk/"
 export JAVA_HOME
+export PATH="/usr/lib/jvm/java-17-openjdk/bin":$PATH
 export PATH="/usr/lib/jvm/java-21-openjdk/bin":$PATH
 
 # Jdtls
@@ -15,13 +17,18 @@ export PATH="/home/tim/.local/share/nvim/mason/packages/jdtls/jdtls":$PATH
 # npm
 export PATH=~/.npm-global/bin:$PATH
 
+# Quarto
+export PATH="/opt/quarto-1.6.30/bin/":$PATH
+
 # Zoxide
 eval "$(zoxide init zsh)"
+
+# GO
 export PATH=$PATH:$HOME/go/bin
-export PATH=$HOME/.local/bin:$PATH
 
 # SSH
 eval "$(ssh-agent -s)"
+
 
 
 # Aliases
