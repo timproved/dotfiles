@@ -194,7 +194,6 @@ bindsym $mod+a focus parent
 bar {
     position bottom
 
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
     status_command ~/.config/sway/config.d/status.sh
     font pango:FiroCode Nerd Font, FontAwesome 10
 

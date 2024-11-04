@@ -51,9 +51,10 @@ get_battery() {
     fi
 }
 
+# Function to get network info
 get_network() {
-    # Try NetworkManager first
-    if command -v nmcli &>/dev/null; then
+    # Check if NetworkManager service is running
+    if systemctl is-active NetworkManager &>/dev/null; then
         SSID=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
         if [ -n "$SSID" ]; then
             echo "󰖩 $SSID" # WiFi icon
@@ -66,16 +67,28 @@ get_network() {
                 echo "󰖪 disconnected" # Disconnected icon
             fi
         fi
-    # Try wpa_supplicant if NetworkManager not available
-    elif command -v wpa_cli &>/dev/null; then
-        SSID=$(wpa_cli status | grep '^ssid=' | cut -d= -f2)
+    # Check if wpa_supplicant service is running
+    elif systemctl is-active wpa_supplicant &>/dev/null; then
+        # Try to get SSID directly from wpa_cli
+        SSID=$(wpa_cli status 2>/dev/null | grep '^ssid=' | cut -d= -f2)
         if [ -n "$SSID" ]; then
             echo "󰖩 $SSID"
         else
+            # Check all network interfaces for an active connection
+            for interface in $(ls /sys/class/net/ | grep -E '^(wlan|eth|enp|wlp)'); do
+                if ip link show $interface | grep -q "state UP"; then
+                    if [[ $interface == wlan* ]] || [[ $interface == wlp* ]]; then
+                        echo "󰖩 eduroam" # WiFi interface is up
+                    else
+                        echo "󰈁 ETH" # Ethernet interface is up
+                    fi
+                    return
+                fi
+            done
             echo "󰖪 disconnected"
         fi
     else
-        echo "? unknown"
+        echo "󰖪 no network service"
     fi
 }
 
