@@ -15,17 +15,22 @@ set $fileManager thunar
 set $menu wofi --show drun
 
 ### Output configuration
-output eDP-1 resolution 1920x1200@60Hz 
+# output eDP-1 resolution 1920x1200@60Hz position 0,0
 output eDP-1 bg ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg stretch
 
-output HDMI-A-1 resolution 3840x2160@60Hz scale 1.25 
+# output HDMI-A-1 resolution 3840x2160@60Hz scale 1.25 
+output DP-7 resolution 2560x1440@60Hz scale 1.25 
 output HDMI-A-1 bg ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg stretch
 
-workspace 1 output HDMI-A-1
-workspace 2 output HDMI-A-1
-workspace 3 output HDMI-A-1
-workspace 4 output HDMI-A-1
-workspace 5 output HDMI-A-1
+workspace 1 output DP-7
+workspace 2 output DP-7
+workspace 3 output DP-7
+workspace 4 output DP-7
+workspace 5 output DP-7
+workspace 6 output DP-7
+workspace 7 output DP-7
+workspace 8 output DP-7
+
 
 
 

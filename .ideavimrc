@@ -1,0 +1,87 @@
+" Set leader key to space
+let mapleader=" "
+
+" Enable IdeaVim plugins for additional functionality
+set ideajoin
+set idearefactormode=keep
+set clipboard+=unnamed
+set scrolloff=8
+
+" Enable which-key plugin for leader key hints
+set which-key
+set notimeout
+
+" Enable Commentary plugin for gcc and gc commands
+set commentary
+
+" Window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" Center cursor on scrolling
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Clipboard operations
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+
+" Buffer navigation (using IdeaVim tabs)
+nnoremap <S-h> :action PreviousTab<CR>
+nnoremap <S-l> :action NextTab<CR>
+nnoremap <C-c> :action CloseContent<CR>
+
+" LSP-like functionality using IntelliJ actions
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gr :action FindUsages<CR>
+nnoremap gI :action GotoImplementation<CR>
+nnoremap <leader>D :action GotoTypeDeclaration<CR>
+nnoremap <leader>ds :action FileStructurePopup<CR>
+nnoremap <leader>ws :action GotoSymbol<CR>
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+nnoremap K :action QuickJavaDoc<CR>
+nnoremap gk :action ParameterInfo<CR>
+nnoremap gD :action GotoDeclaration<CR>
+nnoremap gl :action ShowErrorDescription<CR>
+nnoremap <leader>q :action ActivateProblemsViewToolWindow<CR>
+
+" Telescope-like functionality mappings
+nnoremap <leader>sh :action Help.KeymapReference<CR>
+nnoremap <leader>sk :action GotoAction<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>ss :action SearchEverywhere<CR>
+nnoremap <leader>sw :action FindInPath<CR>
+nnoremap <leader>sg :action FindInPath<CR>
+nnoremap <leader>sd :action ShowErrorDescription<CR>
+nnoremap <leader>sr :action RecentFiles<CR>
+nnoremap <leader>s. :action RecentFiles<CR>
+nnoremap <leader><leader> :action RecentFiles<CR>
+
+" Disable arrow keys with messages
+nnoremap <left> :echo "Use h to move!!"<CR>
+nnoremap <right> :echo "Use l to move!!"<CR>
+nnoremap <up> :echo "Use k to move!!"<CR>
+nnoremap <down> :echo "Use j to move!!"<CR>
+nnoremap <S-k> :echo "wrong!"<CR>
+nnoremap <S-j> :echo "wrong!"<CR>
+
+" Window resizing (using IntelliJ actions)
+nnoremap <C-Up> :action StretchSplitToTop<CR>
+nnoremap <C-Down> :action StretchSplitToBottom<CR>
+nnoremap <C-Left> :action StretchSplitToLeft<CR>
+nnoremap <C-Right> :action StretchSplitToRight<CR>
+
+" Additional IdeaVim settings for better Vim emulation
+set incsearch
+set ignorecase
+set smartcase
+set number
+set relativenumber
+set showmode
+set showcmd
