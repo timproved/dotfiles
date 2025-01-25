@@ -7,7 +7,7 @@ line-uses-ring
 
 # bg
 image= ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg
-scaling=center
+scaling=stretch
 color=161821a0
 
 # unlocking indicator
