@@ -14,7 +14,7 @@ mkdir -p "$HOME_DIR/.config"
 
 # Install required packages
 echo "Installing required packages..."
-sudo pacman -S --needed keyd zsh tmux kitty wofi
+sudo pacman -S --needed keyd zsh tmux kitty wofi zoxide fzf fd
 
 # Function to create symlink
 create_symlink() {
@@ -34,6 +34,7 @@ create_symlink() {
 create_symlink "$SCRIPT_DIR/.zshrc" "$HOME_DIR/.zshrc"
 create_symlink "$SCRIPT_DIR/.zshenv" "$HOME_DIR/.zshenv"
 create_symlink "$SCRIPT_DIR/.ideavimrc" "$HOME_DIR/.ideavimrc"
+create_symlink "$SCRIPT_DIR/.local/bin/scripts" "$HOME_DIR/.local/bin"
 
 # Symlink .config directories
 for config_dir in "$SCRIPT_DIR/.config"/*; do

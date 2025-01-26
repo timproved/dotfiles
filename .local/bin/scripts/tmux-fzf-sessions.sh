@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
 
-# Function to create new tmux session or switch to existing one
 create_or_switch_session() {
     local dir=$1
     local session_name=$(basename "$dir" | tr '.' '_')
 
-    # Check if session exists
     if ! tmux has-session -t="$session_name" 2>/dev/null; then
-        # Create new session if it doesn't exist
-        tmux new-session -d -s "$session_name" -c "$dir"
+        tmux new-session -d -s "$session_name" -c "$dir" "cd $dir && /bin/zsh"
     fi
 
-    # If we're already in tmux, switch to the session
     if [ -n "$TMUX" ]; then
         tmux switch-client -t "$session_name"
     else
@@ -19,21 +15,17 @@ create_or_switch_session() {
     fi
 }
 
-# Use fd if available (faster), fallback to find
+# Find directories in ~/dev with depth 1
 if command -v fd >/dev/null 2>&1; then
-    dirs=$(fd . ~/dev -t d -d 3)
+    dirs=$(fd . ~/dev -t d -d 2)
 else
-    dirs=$(find ~/dev -type d -maxdepth 3)
+    dirs=$(find ~/dev -type d -maxdepth 1)
 fi
 
-# Use fzf to select directory
 selected=$(echo "$dirs" | fzf --height 40% --reverse --border rounded \
     --preview 'tree -L 1 {}' \
     --header 'Select directory to create/switch tmux session')
 
-# Exit if no selection made
-if [ -z "$selected" ]; then
-    exit 0
-fi
+[ -z "$selected" ] && exit 0
 
 create_or_switch_session "$selected"
