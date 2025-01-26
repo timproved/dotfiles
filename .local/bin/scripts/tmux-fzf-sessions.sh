@@ -9,9 +9,9 @@ create_or_switch_session() {
     fi
 
     if [ -n "$TMUX" ]; then
-        tmux switch-client -t "$session_name"
+        TERM=screen-256color-bce tmux switch-client -t "$session_name"
     else
-        tmux attach-session -t "$session_name"
+        TERM=screen-256color-bce tmux attach-session -t "$session_name"
     fi
 }
 
