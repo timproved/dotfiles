@@ -1,97 +1,58 @@
 #!/bin/bash
 
-# Set the directory containing the dotfiles and the list of packages
-DOTFILES_DIR="$HOME/dotfiles"
-PACKAGE_LIST="$DOTFILES_DIR/packageList.txt"
+# Exit on error
+set -e
 
-create_symlinks() {
-    echo "Creating symlinks for dotfiles..."
-    ln -sfn "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-    ln -sfn "$DOTFILES_DIR/.config/tmux" "$HOME/.config/tmux"
-    ln -sfn "$DOTFILES_DIR/.config/sway" "$HOME/.config/sway"
-    ln -sfn "$DOTFILES_DIR/.config/swaylock" "$HOME/.config/swaylock"
-    ln -sfn "$DOTFILES_DIR/.config/waybar" "$HOME/.config/waybar"
+# Define home directory
+HOME_DIR="/home/tim"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-    # Prompt for terminal choice
-    echo "Which terminal are you using?"
-    echo "1) Alacritty"
-    echo "2) Kitty"
-    echo "3) WezTerm"
-    read -rp "Enter the number corresponding to your terminal: " terminal_choice
+echo "Setting up dotfiles..."
 
-    # Set the correct terminal dotfiles directory based on the choice
-    case $terminal_choice in
-    1)
-        TERMINAL="alacritty"
-        ln -sfn "$DOTFILES_DIR/.config/alacritty" "$HOME/.config/alacritty"
-        ;;
-    2)
-        TERMINAL="kitty"
-        ln -sfn "$DOTFILES_DIR/.config/kitty" "$HOME/.config/kitty"
-        ;;
-    3)
-        TERMINAL="wezterm"
-        ln -sfn "$DOTFILES_DIR/.config/wezterm" "$HOME/.config/wezterm"
-        ;;
-    *)
-        echo "Invalid choice! Exiting."
-        exit 1
-        ;;
-    esac
+# Create ~/.config directory if it doesn't exist
+mkdir -p "$HOME_DIR/.config"
 
-}
+# Install required packages
+echo "Installing required packages..."
+sudo pacman -S --needed keyd zsh tmux kitty wofi
 
-# Function to install packages
-install_packages() {
-    echo "Installing packages from packageList.txt..."
+# Function to create symlink
+create_symlink() {
+    local source="$1"
+    local target="$2"
 
-    if [ -f "$PACKAGE_LIST" ]; then
-        # Install packages from packageList.txt
-        sudo pacman -S neovim tmux git make unzip alacritty fzf ripgrep zsh
-        sudo pacman -S gcc npm rust ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols ttf-fira-sans ttf-font-awesome fd
-        sudo pacman -S --needed - <"$PACKAGE_LIST"
-    else
-        echo "Error: packageList.txt not found!"
-        exit 1
+    if [ -e "$target" ] || [ -L "$target" ]; then
+        echo "Removing existing: $target"
+        rm -rf "$target"
     fi
+
+    echo "Creating symlink: $source -> $target"
+    ln -s "$source" "$target"
 }
 
-# Function to source .zshrc
-source_zshrc() {
-    if [ -f "$HOME/.zshrc" ]; then
-        echo "Sourcing .zshrc..."
-        source "$HOME/.zshrc"
-    else
-        echo "Error: .zshrc not found!"
+# Symlink files in home directory
+create_symlink "$SCRIPT_DIR/.zshrc" "$HOME_DIR/.zshrc"
+create_symlink "$SCRIPT_DIR/.zshenv" "$HOME_DIR/.zshenv"
+create_symlink "$SCRIPT_DIR/.ideavimrc" "$HOME_DIR/.ideavimrc"
+
+# Symlink .config directories
+for config_dir in "$SCRIPT_DIR/.config"/*; do
+    if [ -d "$config_dir" ]; then
+        dir_name=$(basename "$config_dir")
+        create_symlink "$config_dir" "$HOME_DIR/.config/$dir_name"
     fi
-}
+done
 
-# Additional tools setup
-install_additional_tools() {
-    echo "Installing additional tools..."
+# Setup keyd
+echo "Setting up keyd..."
+sudo mkdir -p /etc/keyd
+sudo cp "$SCRIPT_DIR/keyd/default.conf" /etc/keyd/default.conf
+sudo cp "$SCRIPT_DIR/keyd/moonlander.conf" /etc/keyd/moonlander.conf
+sudo systemctl enable keyd --now
 
-    # Clone TPM for Tmux
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+# Set zsh as default shell if not already
+if [[ $SHELL != "/usr/bin/zsh" ]]; then
+    chsh -s /usr/bin/zsh
+fi
 
-    # Install zoxide
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-
-    # Install Oh My Zsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-    # Clone zsh-autosuggestions plugin
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-    # Clone fast-syntax-highlighting plugin
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-
-    echo "Additional tools installation completed!"
-}
-
-# Main script execution
-install_packages
-install_additional_tools
-create_symlinks
-source_zshrc
-
-echo "Setup completed!"
+echo "Setup completed successfully!"
