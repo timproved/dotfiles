@@ -37,6 +37,7 @@ alias ls="ls -la"
 alias shutdown="shutdown now"
 alias cd="z"
 alias tmux="TERM=screen-256color-bce tmux"
+alias rdp_server="xfreerdp3 /v:11.23.58.100:9729 /u:server /p:mypassword /dynamic-resolution"
 
 
 
