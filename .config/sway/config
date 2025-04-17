@@ -16,7 +16,7 @@ set $menu wofi --show drun
 
 ### Output configuration
 output DP-2 resolution 3840x2160@144Hz scale 1.5
-output DP-2 bg ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg stretch
+# output DP-2 bg ~/dotfiles/.config/sway/backgrounds/tux-penguin-4k-3z-3840x2160.jpg stretch
 
 # bindswitch --reload --locked lid:on output $laptop disable
 # bindswitch --reload --locked lid:off output $laptop enable 
@@ -184,15 +184,16 @@ bindsym $mod+a focus parent
 
 bar {
     position bottom
+    status_command i3status
 
-    status_command ~/.config/sway/config.d/status.sh
-    font pango:FiroCode Nerd Font, FontAwesome 10
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    # status_command ~/.config/sway/config.d/status.sh
+    # font pango:FiroCode Nerd Font, FontAwesome 10
+    #
+    # colors {
+    #     statusline #ffffff
+    #     background #323232
+    #     inactive_workspace #32323200 #32323200 #5c5c5c
+    # }
 }
 # Font
 #set font FiraSansMono

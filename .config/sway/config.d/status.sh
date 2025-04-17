@@ -80,7 +80,7 @@ while true; do
     volume=$(get_volume)
     battery=$(get_battery)
     network=$(get_network)
-    datetime="󰃭 $(date +'%d-%m-%Y')| 󰥔 $(date +'%H:%M')"
+    datetime="󰃭 $(date +'%d-%m-%Y')| 󰥔  $(date +'%H:%M')"
 
     echo " $volume | $network | $datetime"
     sleep 1

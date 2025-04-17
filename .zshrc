@@ -22,6 +22,10 @@ export PATH=$PATH:$HOME/go/bin
 # SSH
 eval "$(ssh-agent -s)"
 
+# Rust 
+export PATH=$PATH:$HOME/.cargo/bin
+
+
 #Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -33,11 +37,11 @@ eval "$(pyenv init - zsh)"
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vi="nvim"
-alias ls="ls -la"
+alias ls="eza -la"
 alias shutdown="shutdown now"
 alias cd="z"
 alias tmux="TERM=screen-256color-bce tmux"
-alias rdp_server="xfreerdp3 /v:11.23.58.100:9729 /u:server /p:mypassword /dynamic-resolution"
+alias rdp_server="xfreerdp3 /u:server /p:password /v:11.23.58.100:49974 /size:1920x1080 /dynamic-resolution"
 
 
 
