@@ -21,8 +21,7 @@ mkdir -p "$HOME_DIR/.config"
 
 # Install required packages
 echo "Installing required packages..."
-sudo pacman -S --needed base base-devel bluez bluez-utils breeze-icons btop chromium dnsmasq docker docker-compose efibootmgr eza fd firefox freerdp fzf gimp go grim grub i3status keyd kitty libreoffice-fresh libvirt lxappearance man-db mesa neovim obs-studio obsidian os-prober pavucontrol pipewire pipewire-alsa pipewire-jack pipewire-pulse polkit-kde-agent pop-gtk-theme qemu-full qt5-wayland qt5ct ripgrep slurp sway swaybg swaylock swaync swtpm timeshift tmux ttf-fira-code ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-font-symbols unzip vim virt-manager wl_clipboard wofi xdg-desktop-portal-gtk xdg-desktop-portal-wlr xorg-xwayland yazi zoxide zsh
-
+sudo pacman -S --needed base base-devel bluez bluez-utils breeze-icons btop chromium dnsmasq docker docker-compose efibootmgr eza fd firefox freerdp fzf gimp go grim grub i3status keyd kitty libreoffice-fresh libvirt lxappearance man-db mesa neovim obs-studio obsidian os-prober pavucontrol pipewire pipewire-alsa pipewire-jack pipewire-pulse polkit-kde-agent pop-gtk-theme qemu-full qt5-wayland qt5ct ripgrep slurp sway swaybg swaylock swaync swtpm timeshift tmux ttf-fira-code ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols unzip vim virt-manager wl-clipboard wofi xdg-desktop-portal-gtk xdg-desktop-portal-wlr xorg-xwayland yazi zoxide zsh zip
 # list of top-level items to link
 items=(.zshrc .zshenv .ideavimrc .ssh .local)
 for item in "${items[@]}"; do
@@ -44,25 +43,22 @@ for cfg in "$DOTFILES"/.config/*; do
 done
 
 echo "Installing keyd config"
-sudo mv DOTFILES_DIR/keyd /etc/.
+sudo mv "$DOTFILES"keyd /etc/.
 sudo systemctl enable keyd --now
 
 echo "Installing SDK!Man"
 curl -s "https://get.sdkman.io" | bash
-exec "$SHELL"
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 echo "Installing Pyenv"
-pacman -S --needed base-devel openssl zlib xz tk
+sudo pacman -S --needed base-devel openssl zlib xz tk
 curl -fsSL https://pyenv.run | bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >>~/.zshrc
 echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >>~/.zshrc
 echo 'eval "$(pyenv init - zsh)"' >>~/.zshrc
-exec "$SHELL"
 
 echo "Installing Rustup:"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-exec "$SHELL"
 
 echo "Enabling libvirtd"
 sudo systemctl enable libvirtd.socket --now
@@ -82,9 +78,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugi
 
 echo "Installing paru"
 sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git
-cd paru
+git clone https://aur.archlinux.org/paru.git HOME_DIR/.
+cd HOME_DIR/paru
 makepkg -si
 
 echo "Getting my Browser:"
 paru -S zen-browser
+exec "$SHELL"
