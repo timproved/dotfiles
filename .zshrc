@@ -40,6 +40,7 @@ alias vi="nvim"
 alias ls="eza -la"
 alias shutdown="shutdown now"
 alias cd="z"
+alias e="eza -al"
 alias tmux="TERM=screen-256color-bce tmux"
 alias rdp_server="xfreerdp3 /u:server /p:password /v:11.23.58.100:49974 /size:1920x1080 /dynamic-resolution"
 

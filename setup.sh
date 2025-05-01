@@ -1,12 +1,19 @@
 #!/bin/bash
 
+# Things to do:
+# 1. Install Packages
+# 1.1 Create symlinks for .config
+# 2. KeyD Config
+# 3. Install required software: SDK!Man, Pyenv, Rustup
+# 4. Starting Deamons
+# 4. Install Zoxide, Oh-My-Zsh and TPM
+
 # Exit on error
 set -e
 
 # Define home directory
 HOME_DIR="/home/tim"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
+DOTFILES="/home/tim/dotfiles/"
 echo "Setting up dotfiles..."
 
 # Create ~/.config directory if it doesn't exist
@@ -14,46 +21,70 @@ mkdir -p "$HOME_DIR/.config"
 
 # Install required packages
 echo "Installing required packages..."
-sudo pacman -S --needed keyd zsh tmux kitty wofi zoxide fzf fd
+sudo pacman -S --needed base base-devel bluez bluez-utils breeze-icons btop chromium dnsmasq docker docker-compose efibootmgr eza fd firefox freerdp fzf gimp go grim grub i3status keyd kitty libreoffice-fresh libvirt lxappearance man-db mesa neovim obs-studio obsidian os-prober pavucontrol pipewire pipewire-alsa pipewire-jack pipewire-pulse polkit-kde-agent pop-gtk-theme qemu-full qt5-wayland qt5ct ripgrep slurp sway swaybg swaylock swaync swtpm timeshift tmux ttf-fira-code ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-font-symbols unzip vim virt-manager wl_clipboard wofi xdg-desktop-portal-gtk xdg-desktop-portal-wlr xorg-xwayland yazi zoxide zsh
 
-# Function to create symlink
-create_symlink() {
-    local source="$1"
-    local target="$2"
-
-    if [ -e "$target" ] || [ -L "$target" ]; then
-        echo "Removing existing: $target"
-        rm -rf "$target"
-    fi
-
-    echo "Creating symlink: $source -> $target"
-    ln -s "$source" "$target"
-}
-
-# Symlink files in home directory
-create_symlink "$SCRIPT_DIR/.zshrc" "$HOME_DIR/.zshrc"
-create_symlink "$SCRIPT_DIR/.zshenv" "$HOME_DIR/.zshenv"
-create_symlink "$SCRIPT_DIR/.ideavimrc" "$HOME_DIR/.ideavimrc"
-create_symlink "$SCRIPT_DIR/.local/bin/scripts" "$HOME_DIR/.local/bin"
-
-# Symlink .config directories
-for config_dir in "$SCRIPT_DIR/.config"/*; do
-    if [ -d "$config_dir" ]; then
-        dir_name=$(basename "$config_dir")
-        create_symlink "$config_dir" "$HOME_DIR/.config/$dir_name"
-    fi
+# list of top-level items to link
+items=(.zshrc .zshenv .ideavimrc .ssh .local)
+for item in "${items[@]}"; do
+    src="$DOTFILES/$item"
+    dest="$HOME/$item"
+    # remove existing link/file if present, then create parent dirs as needed
+    rm -rf "$dest"
+    ln -s "$src" "$dest"
+    echo "Linked $dest → $src"
 done
 
-# Setup keyd
-echo "Setting up keyd..."
-sudo mkdir -p /etc/keyd
-sudo cp "$SCRIPT_DIR/keyd/default.conf" /etc/keyd/default.conf
-sudo cp "$SCRIPT_DIR/keyd/moonlander.conf" /etc/keyd/moonlander.conf
+# now link every folder inside .config
+for cfg in "$DOTFILES"/.config/*; do
+    name="$(basename "$cfg")"
+    dest="$HOME/.config/$name"
+    rm -rf "$dest"
+    ln -s "$cfg" "$dest"
+    echo "Linked $dest → $cfg"
+done
+
+echo "Installing keyd config"
+sudo mv DOTFILES_DIR/keyd /etc/.
 sudo systemctl enable keyd --now
 
-# Set zsh as default shell if not already
-if [[ $SHELL != "/usr/bin/zsh" ]]; then
-    chsh -s /usr/bin/zsh
-fi
+echo "Installing SDK!Man"
+curl -s "https://get.sdkman.io" | bash
+exec "$SHELL"
+source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-echo "Setup completed successfully!"
+echo "Installing Pyenv"
+pacman -S --needed base-devel openssl zlib xz tk
+curl -fsSL https://pyenv.run | bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >>~/.zshrc
+echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >>~/.zshrc
+echo 'eval "$(pyenv init - zsh)"' >>~/.zshrc
+exec "$SHELL"
+
+echo "Installing Rustup:"
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+exec "$SHELL"
+
+echo "Enabling libvirtd"
+sudo systemctl enable libvirtd.socket --now
+
+echo "Enabling bluetooth"
+sudo systemctl enable bluetooth.service --now
+
+echo "Installing Tmux plugin manager"
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+echo "Intstalling Zoxide"
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+echo "Installing Oh-My-Zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+echo "Installing paru"
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+
+echo "Getting my Browser:"
+paru -S zen-browser
