@@ -10,6 +10,9 @@ The heart of my workflow is a combination of:
 
 ## Installation
 
+DISCLAIMER: sudo is required, since we are going to edit /etc/environment and /etc/keyd; 
+**please inspect the script before you use it**
+
 ```bash
 sudo ./setup.sh
 ```
