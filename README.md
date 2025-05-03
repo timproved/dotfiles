@@ -3,10 +3,7 @@
 ## Introduction
 
 The goal of my workflow is to be able to efficiently execute tasks on my computer.
-The heart of my workflow is a combination of:
-
-- A window manager to organize different workspaces - Tmux, a terminal multiplexer to quickly switch between different tasks
-- Neovim to make edits to files and navigate quickly through a project
+These dotfiles setup the entire WM Setup on Wayland with some Development Tools and Virtualization.
 
 ## Installation
 
