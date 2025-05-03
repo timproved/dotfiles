@@ -9,24 +9,28 @@
 # 6. Install Zoxide, Oh-My-Zsh and TPM
 # 7. Install Browser
 
+if ((EUID != 0)); then
+    echo "Please run with sudo—this script writes to /etc" >&2
+    exit 1
+fi
+
 # Exit on error
 set -e
 
 # Define home directory
-HOME_DIR="/home/tim"
 DOTFILES="/home/tim/dotfiles/"
 echo "Setting up dotfiles..."
 
 # Create ~/.config directory if it doesn't exist
-mkdir -p "$HOME_DIR/.config"
+mkdir -p "$HOME/.config"
 
 # Install required packages
 echo "Installing required packages..."
 sudo pacman -S --needed base base-devel bluez bluez-utils breeze-icons btop chromium dnsmasq docker docker-compose efibootmgr eza fd firefox freerdp fzf gimp go grim grub i3status keyd kitty libreoffice-fresh libvirt lxappearance man-db mesa neovim obs-studio obsidian os-prober pavucontrol pipewire pipewire-alsa pipewire-jack pipewire-pulse polkit-kde-agent pop-gtk-theme qemu-full qt5-wayland qt5ct ripgrep slurp sway swaybg swaylock swaync swtpm timeshift tmux ttf-fira-code ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols unzip vim virt-manager wl-clipboard wofi xdg-desktop-portal-gtk xdg-desktop-portal-wlr xorg-xwayland yazi zoxide zsh zip
 
 echo "Setting Env Vars for wayland and qt5ct"
-sudo echo 'export QT_QPA_PLATFORM="wayland"' >>/etc/environment
-sudo echo 'export QT_QPA_PLATFORMTHEME="qt5ct"' >>/etc/environment
+echo 'export QT_QPA_PLATFORM="wayland"' | sudo tee -a /etc/environment
+echo 'export QT_QPA_PLATFORMTHEME="qt5ct"' | sudo tee -a /etc/environment
 
 echo "Installing keyd config"
 sudo mv "$DOTFILES"keyd /etc/.
@@ -52,25 +56,6 @@ sudo systemctl enable libvirtd.socket --now
 echo "Enabling bluetooth"
 sudo systemctl enable bluetooth.service --now
 
-echo "Installing Tmux plugin manager"
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-
-echo "Intstalling Zoxide"
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-
-echo "Installing paru"
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git HOME_DIR/.
-cd HOME_DIR/paru
-makepkg -si
-
-echo "Getting my Browser:"
-paru -S zen-browser
-
-echo "Installing Oh-My-Zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-
 # list of top-level items to link
 items=(.zshrc .zshenv .ideavimrc .ssh .local)
 for item in "${items[@]}"; do
@@ -90,5 +75,25 @@ for cfg in "$DOTFILES"/.config/*; do
     ln -s "$cfg" "$dest"
     echo "Linked $dest → $cfg"
 done
-echo "DONE!!!"
+
+echo "Installing Tmux plugin manager"
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+echo "Installing Zoxide"
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+echo "Installing paru"
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git $HOME/paru
+cd $HOME/paru
+makepkg -si
+
+echo "Getting my Browser:"
+paru -S zen-browser
+
+echo "Installing Oh-My-Zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
 exec "$SHELL"
+echo "DONE!!!"
