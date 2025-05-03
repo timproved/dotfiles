@@ -76,6 +76,9 @@ for cfg in "$DOTFILES"/.config/*; do
     echo "Linked $dest → $cfg"
 done
 
+echo "Installing tmux script"
+mv $DOTFILES/.local/bin $HOME/.local/bin
+
 echo "Installing Tmux plugin manager"
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
