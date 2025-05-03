@@ -10,64 +10,10 @@ The heart of my workflow is a combination of:
 
 ## Installation
 
-### Install External Dependencies
-
-Base Packages:
-
-```sh
-sudo pacman -S neovim tmux git make unzip alacritty fzf ripgrep zsh
+```bash
+sudo ./setup.sh
 ```
 
-External Requirements:
-
-```sh
-sudo pacman -S gcc npm rust ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols ttf-fira-sans ttf-font-awesome fd
-```
-
-- TMUX Plugin Manager
-
-```sh
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-```
-
-Stuff you'd might like:
-
-- Zoxide:
-
-```sh
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-```
-
-- Oh My Zsh:
-
-```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-- Oh My Zsh Autosuggestions`
-
-```sh
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-```
-
-- Oh My Zsh Syntax Highlight
-
-```sh
-git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-```
-
--
-
-### Post Installation
-
-Start Neovim
-
-```sh
-nvim
-```
-
-That's it! Lazy will install all the plugins you have. Use `:Lazy` to view
-current plugin status. Hit `q` to close the window.
 
 #### Windows Installation
 
