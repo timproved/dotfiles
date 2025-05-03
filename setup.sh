@@ -107,43 +107,9 @@ sudo -u "$BUILD_USER" bash <<EOF
   paru -S --noconfirm zen-browser
 EOF
 
-
 echo "Installing Oh-My-Zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-
-echo "Generating GitHub SSH keypair and opening GitHub…"
-
-# Run keygen, clipboard copy, and browser launch as that unprivileged user
-BUILD_USER=${SUDO_USER:-$(whoami)}
-sudo -u "$BUILD_USER" bash <<'EOF'
-  set -e
-
-  SSH_DIR="\$HOME/.ssh"
-  KEY_NAME="github_private"
-
-  mkdir -p "\$SSH_DIR"
-  cd "\$SSH_DIR"
-
-  if [ -f "\$KEY_NAME" ]; then
-    echo "  ↳ \$KEY_NAME already exists—skipping key generation."
-  else
-    echo "  ↳ Creating new Ed25519 keypair at \$SSH_DIR/\$KEY_NAME"
-    ssh-keygen -t ed25519 \
-      -f "\$KEY_NAME" \
-      -C "$BUILD_USER@$(hostname)" \
-      -N ""
-  fi
-
-  echo "  ↳ Copying public key to clipboard…"
-  wl-copy < "\$KEY_NAME.pub"
-
-  echo "  ↳ Launching GitHub in zen-browser…"
-  # background it so the script can finish
-  zen-browser "https://github.com" &
-
-  echo "  ↳ Done! Public key is in your clipboard, and GitHub is open."
-EOF
 
 exec "$SHELL"
 echo "DONE!!!"
