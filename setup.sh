@@ -82,11 +82,16 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 echo "Installing Zoxide"
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
-echo "Installing paru"
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git $HOME/paru
-cd $HOME/paru
-makepkg -si
+# capture the non-root invoking user
+BUILD_USER=${SUDO_USER:-$(whoami)}
+
+echo "Installing paru as $BUILD_USER…"
+sudo -u "$BUILD_USER" bash <<EOF
+  cd "\$HOME"
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+  makepkg -si --noconfirm
+EOF
 
 echo "Getting my Browser:"
 paru -S zen-browser
